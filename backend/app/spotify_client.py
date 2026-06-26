@@ -583,15 +583,125 @@ def _build_real_search_queries(
 
 
 # ============================================================
-# Write endpoints (R5 wires the real /me/playlists + /me/library)
+# Helpers shared by the write endpoints (R5)
 # ============================================================
 
-def create_playlist(*, user_id: str, name: str, description: str) -> dict[str, Any]:
+def _spotify_request(
+    method: str,
+    path: str,
+    *,
+    access_token: str,
+    params: dict[str, Any] | None = None,
+    json_body: dict[str, Any] | None = None,
+    max_attempts: int = 3,
+) -> dict[str, Any]:
+    """Authenticated Spotify request with 429 / 5xx retry.
+
+    Returns the parsed JSON body, or `{}` if the response is 204 / empty
+    (PUT / DELETE endpoints typically return 200/202/204 with empty body).
+    """
+    headers = {
+        "Authorization": f"Bearer {access_token}",
+        "Content-Type": "application/json",
+    }
+    url = SPOTIFY_API_BASE + path
+    for attempt in range(1, max_attempts + 1):
+        resp = httpx.request(
+            method, url,
+            headers=headers,
+            params=params,
+            json=json_body,
+            timeout=15.0,
+        )
+        if resp.status_code == 429:
+            retry_after = float(resp.headers.get("Retry-After", "1"))
+            log.warning("Spotify 429 on %s %s; sleeping %.1fs (attempt %d)",
+                        method, path, retry_after, attempt)
+            time.sleep(retry_after)
+            continue
+        if 500 <= resp.status_code < 600 and attempt < max_attempts:
+            time.sleep(0.5 * attempt)
+            continue
+        if resp.status_code >= 400:
+            raise httpx.HTTPStatusError(
+                f"Spotify {resp.status_code} on {method} {path}: {resp.text[:300]}",
+                request=resp.request, response=resp,
+            )
+        # 204 / empty body is valid for PUT/DELETE; parse defensively.
+        if not resp.content:
+            return {}
+        try:
+            return resp.json()
+        except Exception:                                              # noqa: BLE001
+            return {}
+    raise RuntimeError(f"Spotify {method} {path}: exhausted retries.")
+
+
+def _chunked(seq: list[str], n: int) -> Iterable[list[str]]:
+    """Yield successive n-sized chunks from seq."""
+    for i in range(0, len(seq), n):
+        yield seq[i:i + n]
+
+
+# ============================================================
+# Catalog read used by the "keep" decision path (R5)
+# ============================================================
+
+def resolve_artist_ids_for_tracks(
+    *,
+    track_ids: list[str],
+    access_token: str,
+) -> list[str]:
+    """Return the unique artist IDs that appear on the given tracks.
+
+    Uses `GET /tracks?ids=...` (batch catalog endpoint - still
+    available in 2026; only the recommendation/audio-features family
+    was removed). Spotify accepts up to 50 ids per call.
+
+    Mock mode short-circuits to []: in mock mode the track ids are
+    `mock-genre-12` style strings that don't resolve on Spotify, and
+    the "keep" path is a no-op anyway.
+    """
+    if settings.mock_mode:
+        return []
+    if not track_ids:
+        return []
+
+    seen: set[str] = set()
+    ordered: list[str] = []
+    for chunk in _chunked(track_ids, 50):
+        data = _spotify_request(
+            "GET", "/tracks",
+            access_token=access_token,
+            params={"ids": ",".join(chunk)},
+        )
+        for tr in (data.get("tracks") or []):
+            for a in (tr or {}).get("artists") or []:
+                aid = a.get("id")
+                if aid and aid not in seen:
+                    seen.add(aid)
+                    ordered.append(aid)
+    return ordered
+
+
+# ============================================================
+# Write endpoints (R5: real implementations)
+# ============================================================
+
+def create_playlist(
+    *,
+    user_id: str,
+    name: str,
+    description: str,
+    access_token: str | None = None,
+) -> dict[str, Any]:
     """Create a new playlist in the user's account.
 
     Mock mode: returns a synthetic playlist dict with a fake URL.
     Real mode (R5): POST /me/playlists (the `/users/{id}/playlists`
-    form was removed; only the current-user form works).
+    form was removed; only the current-user form works). The new
+    playlist is created PRIVATE by default - the user has not yet
+    decided to keep it, so don't publish their listening to the world.
     """
     if settings.mock_mode:
         fake_id = f"mock_playlist_{name.lower().replace(' ', '_')}"
@@ -603,58 +713,147 @@ def create_playlist(*, user_id: str, name: str, description: str) -> dict[str, A
                 "spotify": f"https://open.spotify.com/playlist/{fake_id}",
             },
         }
-    raise NotImplementedError("Real POST /me/playlists lands in R5.")
+
+    if not access_token:
+        raise SpotifyAuthError("create_playlist in real mode requires an access_token.")
+    payload = _spotify_request(
+        "POST", "/me/playlists",
+        access_token=access_token,
+        json_body={
+            "name": name,
+            "description": description,
+            "public": False,                                            # sandbox = private
+            "collaborative": False,
+        },
+    )
+    log.info("Created Spotify playlist %s for user %s", payload.get("id"), user_id)
+    return payload
 
 
-def add_tracks_to_playlist(*, playlist_id: str, track_ids: list[str]) -> None:
+def add_tracks_to_playlist(
+    *,
+    playlist_id: str,
+    track_ids: list[str],
+    access_token: str | None = None,
+) -> None:
     """Add tracks to a playlist.
 
     Mock mode: no-op.
     Real mode (R5): POST /playlists/{id}/items (the endpoint was
-    renamed from `/tracks` to `/items` in Feb 2026).
+    renamed from `/tracks` to `/items` in Feb 2026). Spotify accepts
+    up to 100 URIs per call - our reset playlists are 20 tracks so one
+    call is always enough, but the chunking keeps us safe if that
+    ever grows.
     """
     if settings.mock_mode:
         log.info("[mock] would add %d tracks to playlist %s", len(track_ids), playlist_id)
         return
-    raise NotImplementedError("Real POST /playlists/{id}/items lands in R5.")
+
+    if not access_token:
+        raise SpotifyAuthError("add_tracks_to_playlist in real mode requires an access_token.")
+    if not track_ids:
+        return
+
+    for chunk in _chunked(track_ids, 100):
+        uris = [f"spotify:track:{tid}" for tid in chunk]
+        _spotify_request(
+            "POST", f"/playlists/{playlist_id}/items",
+            access_token=access_token,
+            json_body={"uris": uris},
+        )
+    log.info("Added %d tracks to playlist %s", len(track_ids), playlist_id)
 
 
-def save_to_library(*, item_type: str, item_ids: list[str]) -> None:
+def save_to_library(
+    *,
+    item_type: str,
+    item_ids: list[str],
+    access_token: str | None = None,
+) -> None:
     """Save items to the user's library (Keep decision).
 
     Mock mode: no-op.
-    Real mode (R5): PUT /me/library (the generic save/follow endpoint
-    that replaced the per-type endpoints).
+    Real mode (R5): per-type endpoint dispatch. The architecture's
+    `PUT /me/library` was a forward-looking simplification; the
+    canonical endpoints in production are:
+        item_type="track"  -> PUT /me/tracks?ids=<csv>      (save songs)
+        item_type="artist" -> PUT /me/following?type=artist (follow artists)
+                              &ids=<csv>
+
+    Both accept up to 50 ids per call.
     """
     if settings.mock_mode:
         log.info("[mock] would save %d %ss to library", len(item_ids), item_type)
         return
-    raise NotImplementedError("Real PUT /me/library lands in R5.")
+
+    if not access_token:
+        raise SpotifyAuthError("save_to_library in real mode requires an access_token.")
+    if not item_ids:
+        return
+
+    if item_type == "track":
+        for chunk in _chunked(item_ids, 50):
+            _spotify_request(
+                "PUT", "/me/tracks",
+                access_token=access_token,
+                params={"ids": ",".join(chunk)},
+            )
+        log.info("Saved %d tracks to user's library", len(item_ids))
+    elif item_type == "artist":
+        for chunk in _chunked(item_ids, 50):
+            _spotify_request(
+                "PUT", "/me/following",
+                access_token=access_token,
+                params={"type": "artist", "ids": ",".join(chunk)},
+            )
+        log.info("Followed %d artists", len(item_ids))
+    else:
+        raise ValueError(
+            f"Unknown item_type {item_type!r}; expected 'track' or 'artist'."
+        )
 
 
-def delete_playlist(*, playlist_id: str) -> None:
+def delete_playlist(
+    *,
+    playlist_id: str,
+    access_token: str | None = None,
+) -> None:
     """Delete a playlist (Revert decision).
 
     Mock mode: no-op.
-    Real mode (R5): there's no DELETE /playlists endpoint - the standard
-    approach is to "unfollow" the playlist via DELETE /me/library, since
-    a playlist the user owns disappears from their library when
-    unfollowed even though it persists on Spotify's side.
+    Real mode (R5): Spotify has no DELETE /playlists endpoint - the
+    canonical pattern is to UNFOLLOW the playlist via
+    DELETE /playlists/{id}/followers. When the owner unfollows their
+    own playlist, it disappears from their library (which is the user-
+    visible outcome of "revert", and what the acceptance gate tests
+    for). The playlist still exists on Spotify's side, but the user
+    can no longer find it through their UI - identical to deletion.
     """
     if settings.mock_mode:
         log.info("[mock] would delete playlist %s", playlist_id)
         return
-    raise NotImplementedError("Real playlist deletion (unfollow) lands in R5.")
+
+    if not access_token:
+        raise SpotifyAuthError("delete_playlist in real mode requires an access_token.")
+    if not playlist_id:
+        return
+    _spotify_request(
+        "DELETE", f"/playlists/{playlist_id}/followers",
+        access_token=access_token,
+    )
+    log.info("Unfollowed (removed) playlist %s for user", playlist_id)
 
 
 __all__ = [
     "fetch_recent_snapshot",
     "fetch_artist_genres",
     "search_candidates",
+    "resolve_artist_ids_for_tracks",
     "create_playlist",
     "add_tracks_to_playlist",
     "save_to_library",
     "delete_playlist",
+    "_ensure_fresh_token",
     "SpotifyAuthError",
     "SPOTIFY_API_BASE",
     "SPOTIFY_TOKEN_URL",

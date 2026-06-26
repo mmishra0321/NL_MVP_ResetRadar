@@ -20,8 +20,8 @@
 | **R2** Reset engine (mock candidates + Groq) | Build search queries from scope, Groq rank + explain, ship `mock_candidates.json` | ✅ |
 | **R3** Frontend (mock-driven end-to-end) | React UI complete on top of mock backend | ✅ |
 | **R4** Spotify OAuth + read endpoints | Wire real Spotify Web API reads behind `MOCK_MODE=false` | ✅ |
-| **R5** Spotify write endpoints | Real playlist create / follow / save / delete | ⏳ next |
-| **R6** GitHub Action + polish | Lock weekly cron workflow, polish UI, lock demo script | ⏳ |
+| **R5** Spotify write endpoints | Real playlist create / follow / save / delete | ✅ |
+| **R6** GitHub Action + polish | Lock weekly cron workflow, polish UI, lock demo script | ⏳ next |
 | **R7** Deploy + capture deck screenshots | Render (backend) + Vercel (frontend), capture 3 frames | ⏳ |
 
 > **R3 is the demo-presentable stopping point.** Everything from R0
@@ -205,11 +205,45 @@ curl -X POST http://127.0.0.1:8000/jobs/run-weekly-detection
 
 - It does NOT switch the frontend default to real mode. The Dashboard
   still calls the same backend; `MOCK_MODE` is the single switch.
-- It does NOT implement the write endpoints (create playlist, save to
-  library, unfollow playlist). Those land in R5; the current Keep /
-  Revert handlers are still mock-only.
 - It does NOT replace the deck-day demo. Mock mode remains the live-URL
   default per architecture R7.
+
+---
+
+## Real-mode writes (R5 -- create playlist, follow, save, unfollow)
+
+R5 wires the four write endpoints so that when `MOCK_MODE=false`:
+
+| Endpoint | When | Effect |
+|---|---|---|
+| `POST /me/playlists` | `POST /reset/sessions` | Creates a private playlist in the user's Spotify account |
+| `POST /playlists/{id}/items` | `POST /reset/sessions` | Adds the 20 LLM-ranked tracks (note: `/items`, not the deprecated `/tracks`) |
+| `PUT /me/following?type=artist&ids=...` | `POST /reset/sessions/{id}/decide` (Keep) | Follows every unique artist on the reset playlist - satisfies the R5 acceptance gate ("Keep adds 5+ artists to followed list") |
+| `PUT /me/tracks?ids=...` | `POST /reset/sessions/{id}/decide` (Keep) | Saves the reset tracks to the user's library so they survive playlist deletion |
+| `DELETE /playlists/{id}/followers` | `POST /reset/sessions/{id}/decide` (Revert) | Unfollows (= removes) the playlist - Spotify has no DELETE /playlists endpoint; this is the canonical pattern |
+
+The "Keep" handler additionally calls `GET /tracks?ids=...` once to
+resolve unique artist IDs from the reset track IDs - that's the input
+to the follow-artists call.
+
+### Architecture deviation note
+
+`02-mvp/doc/architecture.md` describes the Keep action as `PUT /me/library`
+(a generic save/follow endpoint). In production Spotify, that endpoint
+doesn't exist as a single surface - the canonical paths are per-type:
+`PUT /me/following` for artists, `PUT /me/tracks` for songs. R5 uses
+both. The architecture wording was a forward-looking simplification.
+
+### What R5 does NOT do (yet)
+
+- It does NOT measure the post-reset stuck score. `after_stuck_score`
+  is still the same heuristic projection (`before × 0.6` on keep) used
+  in mock mode. A measured `after_stuck_score` requires next Monday's
+  cron to land a fresh weekly snapshot - that's R6 territory.
+- It does NOT add a "Login with Spotify" CTA to the frontend. The
+  frontend still defaults to mock mode; flipping `MOCK_MODE=false`
+  requires walking the `curl http://127.0.0.1:8000/auth/login` flow
+  manually for now (UI polish lands in R6).
 
 ---
 

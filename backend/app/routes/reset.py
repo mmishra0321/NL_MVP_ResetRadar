@@ -1,8 +1,10 @@
 """Reset session endpoints - create, fetch, decide.
 
 R2 ships real `POST /reset/sessions` + `GET /reset/sessions/{id}`.
-R5 (later) wires real Spotify playlist write + Keep/Revert handling;
-for now `POST /sessions/{id}/decide` remains a 501 stub.
+R5 wires real Spotify writes: when MOCK_MODE=false, the create endpoint
+materialises a real playlist in the user's Spotify library, and the
+decide endpoint follows artists + saves tracks on "keep" or unfollows
+the playlist on "revert".
 """
 from __future__ import annotations
 
@@ -29,9 +31,12 @@ from app.models import (
 )
 from app.reset_engine import generate_reset_playlist
 from app.spotify_client import (
+    SpotifyAuthError,
+    _ensure_fresh_token,
     add_tracks_to_playlist,
     create_playlist,
     delete_playlist,
+    resolve_artist_ids_for_tracks,
     save_to_library,
 )
 
@@ -139,18 +144,35 @@ def create_reset_session(body: ResetSessionIn) -> ResetSessionOut:
                 ),
             )
 
-        playlist = create_playlist(
-            user_id=body.user_id,
-            name=f"Reset Radar - {'/'.join(body.scope_dimensions)}",
-            description=(
-                "Sandboxed " + str(settings.trial_window_days) + "-day reset trial. "
-                "Keep or revert at the end."
-            ),
-        )
-        add_tracks_to_playlist(
-            playlist_id=playlist["id"],
-            track_ids=[t["spotify_track_id"] for t in tracks],
-        )
+        # In real mode we need an access token to actually create the
+        # playlist on Spotify. Mock mode ignores access_token entirely.
+        access_token = _maybe_fresh_token(user)
+        try:
+            playlist = create_playlist(
+                user_id=body.user_id,
+                name=f"Reset Radar - {'/'.join(body.scope_dimensions)}",
+                description=(
+                    "Sandboxed " + str(settings.trial_window_days) + "-day reset trial. "
+                    "Keep or revert at the end."
+                ),
+                access_token=access_token,
+            )
+            add_tracks_to_playlist(
+                playlist_id=playlist["id"],
+                track_ids=[t["spotify_track_id"] for t in tracks],
+                access_token=access_token,
+            )
+        except SpotifyAuthError as exc:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail=f"Spotify auth failed during playlist write: {exc}",
+            )
+        except Exception as exc:                                       # noqa: BLE001
+            log.exception("Spotify playlist creation failed.")
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail=f"Spotify playlist creation failed: {exc}",
+            )
 
         # Capture before_stuck_score at session-creation time so the
         # outcome screen can show before/after even after weeks pass.
@@ -214,25 +236,34 @@ def get_reset_session(session_id: str) -> ResetSessionOut:
 def decide_reset_session(session_id: str, body: ResetDecisionIn) -> ResetOutcomeOut:
     """Apply the Keep / Revert decision and return the outcome.
 
-    Mock-mode behaviour (R3):
-      - decision is recorded on ResetSession.decision
-      - after_stuck_score is a heuristic projection (see below)
-      - keep: spotify_client.save_to_library is called (no-op in mock)
-      - revert: spotify_client.delete_playlist is called (no-op in mock)
+    Behaviour by mode:
 
-    Real-Spotify writes land in R5; this endpoint is the seam where R5
-    will replace the no-ops with real PUT /me/library / DELETE calls.
+      MOCK mode (default for the live demo):
+        - keep   -> save_to_library is a no-op log line
+        - revert -> delete_playlist is a no-op log line
+        - after_stuck_score is a heuristic projection (see below)
 
-    after_stuck_score heuristic (mock-only, honest framing):
+      REAL mode (MOCK_MODE=false, after R4 OAuth + R5 writes):
+        - keep   -> follows EVERY unique artist on the reset playlist
+                    via PUT /me/following?type=artist (acceptance gate:
+                    "keep adds 5+ artists to followed list") AND saves
+                    every reset track via PUT /me/tracks
+        - revert -> DELETE /playlists/{id}/followers (canonical Spotify
+                    "delete a playlist" pattern - playlist disappears
+                    from the user's library)
+        - after_stuck_score retains the same heuristic projection in
+          this endpoint; the next weekly cron will overwrite it with
+          a measured value once a real post-reset snapshot exists.
+
+    after_stuck_score heuristic (honest framing):
       keep   -> before_stuck_score * 0.6 (4-axis fan-out from 20 new
                 tracks all on the chosen dimension; rough linear estimate
                 that drops the rolling_overlap meaningfully and pushes
                 normalised entropy up about 1/3 of the way)
       revert -> before_stuck_score        (no listening change)
 
-    The real after_score will be measured (not estimated) after R4 wires
-    real /me/top/tracks reads. The frontend renders this with an
-    "approximation" label so the demo is honest.
+    The frontend renders this with an "approximation" label so the demo
+    is honest about the projection vs. measurement.
     """
     with db_session() as db:
         session_row = db.get(ResetSession, session_id)
@@ -248,22 +279,64 @@ def decide_reset_session(session_id: str, body: ResetDecisionIn) -> ResetOutcome
                        f"({session_row.decision!r})",
             )
 
-        if body.decision == "keep":
-            save_to_library(
-                item_type="track",
-                item_ids=[t.spotify_track_id for t in session_row.tracks],
-            )
-            after_score = (
-                round(session_row.before_stuck_score * 0.6, 4)
-                if session_row.before_stuck_score is not None else None
-            )
-        elif body.decision == "revert":
-            delete_playlist(playlist_id=session_row.spotify_playlist_id)
-            after_score = session_row.before_stuck_score                # unchanged
-        else:
+        # Need the User row for token refresh in real mode. Mock mode
+        # tolerates a missing user (the route auto-creates demo users in
+        # jobs.py but a stale DB might not have them).
+        user = db.get(User, session_row.user_id)
+        access_token = _maybe_fresh_token(user) if user is not None else None
+
+        track_ids = [t.spotify_track_id for t in session_row.tracks]
+
+        try:
+            if body.decision == "keep":
+                # 1) Resolve artist IDs from the track IDs (1 batch call).
+                #    In mock mode this returns []; the follow-artists branch
+                #    below is a no-op.
+                artist_ids = resolve_artist_ids_for_tracks(
+                    track_ids=track_ids,
+                    access_token=access_token or "",
+                )
+                # 2) Follow the artists (the primary acceptance gate).
+                if artist_ids:
+                    save_to_library(
+                        item_type="artist",
+                        item_ids=artist_ids,
+                        access_token=access_token,
+                    )
+                # 3) Save the tracks too (so they survive in the user's
+                #    library after the playlist is gone).
+                save_to_library(
+                    item_type="track",
+                    item_ids=track_ids,
+                    access_token=access_token,
+                )
+                after_score = (
+                    round(session_row.before_stuck_score * 0.6, 4)
+                    if session_row.before_stuck_score is not None else None
+                )
+            elif body.decision == "revert":
+                delete_playlist(
+                    playlist_id=session_row.spotify_playlist_id,
+                    access_token=access_token,
+                )
+                after_score = session_row.before_stuck_score              # unchanged
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    detail=f"unknown decision {body.decision!r}",
+                )
+        except HTTPException:
+            raise
+        except SpotifyAuthError as exc:
             raise HTTPException(
-                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-                detail=f"unknown decision {body.decision!r}",
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail=f"Spotify auth failed during decision write: {exc}",
+            )
+        except Exception as exc:                                       # noqa: BLE001
+            log.exception("Spotify decision write failed.")
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail=f"Spotify decision write failed: {exc}",
             )
 
         session_row.decision = body.decision
@@ -278,6 +351,26 @@ def decide_reset_session(session_id: str, body: ResetDecisionIn) -> ResetOutcome
             after_stuck_score=session_row.after_stuck_score,
             decision=session_row.decision,                              # type: ignore[arg-type]
         )
+
+
+# ============================================================
+# Token-refresh helper used by both write paths
+# ============================================================
+
+def _maybe_fresh_token(user: User | None) -> str | None:
+    """Return a fresh access_token, or None in mock mode / no-auth user.
+
+    Mock mode never needs the token (writes are no-ops); a user with no
+    access_token (e.g. the synthetic demo personas) also yields None,
+    in which case the downstream write functions are mock-mode no-ops.
+    Only real-mode authenticated users go through `_ensure_fresh_token`
+    and may have their refresh_token rotated as a side effect.
+    """
+    if settings.mock_mode:
+        return None
+    if user is None or not user.access_token:
+        return None
+    return _ensure_fresh_token(user)
 
 
 __all__ = ["router"]
