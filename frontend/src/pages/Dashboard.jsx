@@ -2,16 +2,22 @@
  * Dashboard - the home page of Reset Radar.
  *
  * Composition:
- *   - top row: persona picker + "Run detection now" button
+ *   - top row: persona picker + "Run detection now" button + optional
+ *              "Login with Spotify" CTA (real mode only)
+ *   - mode badge: clearly states whether the page is running on
+ *                 synthetic data or live Spotify reads (R6 honesty)
  *   - active nudge (if any) - clicking Try opens /reset
- *   - 4-dimension stuck-score chart
+ *   - 4-dimension stuck-score chart (skeleton placeholder while loading)
+ *   - per-dimension grid (skeleton while loading)
  *   - empty state when no snapshots exist
  *
  * Wires:
+ *   - GET /health        (mock_mode flag + LLM models)
+ *   - GET /auth/me       (R4 session cookie)
  *   - GET /users
  *   - GET /scores/history?user_id=...
  *   - GET /nudges/latest?user_id=...
- *   - POST /jobs/run-weekly-detection
+ *   - POST /jobs/run-detection
  *
  * State is local to the page; the only persisted bit is the active
  * user id (see useDemoUser).
@@ -32,6 +38,10 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [running, setRunning] = useState(false);
+
+  // R6: mode awareness (mock vs real) + auth state for the login CTA.
+  const [meta, setMeta] = useState({ mockMode: true });
+  const [me, setMe] = useState({ authenticated: false });
 
   const refresh = useCallback(async (uid) => {
     if (!uid) return;
@@ -54,11 +64,23 @@ export default function Dashboard() {
     }
   }, []);
 
-  // Initial user list - one-shot
+  // Initial bootstrap - users + mode + auth, in parallel.
   useEffect(() => {
-    api.listUsers()
-      .then((u) => setUsers(Array.isArray(u) ? u : []))
-      .catch(() => setUsers([]));
+    Promise.all([
+      api.listUsers().catch(() => []),
+      api.health().catch(() => null),
+      api.whoami().catch(() => ({ authenticated: false })),
+    ]).then(([users, health, whoami]) => {
+      setUsers(Array.isArray(users) ? users : []);
+      if (health && typeof health === 'object') {
+        setMeta({
+          mockMode: !!health.mock_mode,
+          reasonerModel: health.reasoner_model,
+          fastModel: health.fast_model,
+        });
+      }
+      setMe(whoami || { authenticated: false });
+    });
   }, []);
 
   // Refresh on userId change
@@ -79,6 +101,14 @@ export default function Dashboard() {
     }
   };
 
+  const handleLogin = () => {
+    window.location.href = api.loginUrl();
+  };
+  const handleLogout = async () => {
+    try { await api.logout(); } catch { /* ignore */ }
+    setMe({ authenticated: false });
+  };
+
   const latest = history.length ? history[history.length - 1] : null;
   const noSnapshots = !loading && history.length === 0;
 
@@ -92,7 +122,14 @@ export default function Dashboard() {
             stuck score for the selected user.
           </div>
         </div>
-        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          <ModeBadge mock={meta.mockMode} />
+          <AuthControl
+            mockMode={meta.mockMode}
+            me={me}
+            onLogin={handleLogin}
+            onLogout={handleLogout}
+          />
           <label
             htmlFor="user-picker"
             style={{ fontSize: '0.82rem', color: colors.textMuted }}
@@ -119,9 +156,11 @@ export default function Dashboard() {
             className="btn-primary"
             onClick={handleRunDetection}
             disabled={running}
-            title="Wipes prior mock-mode state for the demo personas and recomputes 8 weeks of stuck scores."
+            title={meta.mockMode
+              ? 'Wipes prior mock-mode state for the demo personas and recomputes 8 weeks of stuck scores.'
+              : 'Appends this week\u2019s Spotify snapshot to each authenticated user\u2019s history and recomputes stuck scores.'}
           >
-            {running ? 'Running...' : 'Run detection now'}
+            {running ? 'Running\u2026' : 'Run detection now'}
           </button>
         </div>
       </div>
@@ -137,20 +176,157 @@ export default function Dashboard() {
       ) : null}
 
       <div style={{ marginTop: '1.5rem' }}>
-        {noSnapshots ? (
-          <EmptyState onRun={handleRunDetection} running={running} />
+        {loading ? (
+          <ChartSkeleton />
+        ) : noSnapshots ? (
+          <EmptyState onRun={handleRunDetection} running={running} mockMode={meta.mockMode} />
         ) : (
           <StuckScoreCard history={history} />
         )}
       </div>
 
-      {latest ? (
+      {loading ? (
+        <DimensionGridSkeleton />
+      ) : latest ? (
         <PerDimensionGrid latest={latest} />
       ) : null}
 
-      <FooterNote />
+      <FooterNote mockMode={meta.mockMode} reasonerModel={meta.reasonerModel} />
     </main>
   );
+}
+
+
+// ============================================================
+// Small UI primitives (mode badge, auth control, skeletons)
+// ============================================================
+
+function ModeBadge({ mock }) {
+  const tone = mock
+    ? { bg: '#1a2a1a', border: colors.spotifyGreen, fg: colors.successLightGreen, label: 'Mock mode' }
+    : { bg: '#1a1f2a', border: '#60a5fa',            fg: '#93c5fd',               label: 'Live Spotify' };
+  return (
+    <span
+      title={mock
+        ? 'No live Spotify calls. Data flows from backend/mock_data/.'
+        : 'Talking to the real Spotify Web API.'}
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: 6,
+        background: tone.bg,
+        border: `1px solid ${tone.border}`,
+        color: tone.fg,
+        borderRadius: 999,
+        padding: '0.25rem 0.65rem',
+        fontSize: '0.78rem',
+        fontWeight: 600,
+        letterSpacing: '0.04em',
+      }}
+    >
+      <span style={{
+        width: 8, height: 8, borderRadius: '50%',
+        background: tone.fg, boxShadow: `0 0 8px ${tone.fg}`,
+      }} />
+      {tone.label}
+    </span>
+  );
+}
+
+function AuthControl({ mockMode, me, onLogin, onLogout }) {
+  // In mock mode, OAuth is intentionally bypassed; don't show login UI.
+  if (mockMode) return null;
+  if (me && me.authenticated) {
+    return (
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+        <span style={{ fontSize: '0.85rem', color: colors.textSecondary }}>
+          Signed in as <strong style={{ color: colors.textPrimary }}>
+            {me.display_name || me.spotify_user_id}
+          </strong>
+        </span>
+        <button type="button" className="btn-secondary" onClick={onLogout}>
+          Log out
+        </button>
+      </span>
+    );
+  }
+  return (
+    <button
+      type="button"
+      className="btn-primary"
+      onClick={onLogin}
+      title="Authorize Reset Radar to read your top tracks, recently played, and saved library."
+    >
+      Login with Spotify
+    </button>
+  );
+}
+
+function ChartSkeleton() {
+  return (
+    <div
+      role="status"
+      aria-label="Loading stuck-score chart"
+      style={{
+        background: colors.surfaceElevated,
+        border: `1px solid ${colors.border}`,
+        borderRadius: 12,
+        padding: '1.25rem',
+        height: 360,
+      }}
+    >
+      <div style={skelLine(180, 14)} />
+      <div style={{ ...skelLine(260, 10), marginTop: 6 }} />
+      <div style={{
+        marginTop: 18,
+        height: 240,
+        background: `repeating-linear-gradient(
+          135deg,
+          ${colors.backgroundCard},
+          ${colors.backgroundCard} 10px,
+          ${colors.surfaceElevated} 10px,
+          ${colors.surfaceElevated} 20px
+        )`,
+        borderRadius: 8,
+        opacity: 0.55,
+      }} />
+    </div>
+  );
+}
+
+function DimensionGridSkeleton() {
+  return (
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(4, 1fr)',
+      gap: '0.85rem',
+      marginTop: '1rem',
+    }}>
+      {[0,1,2,3].map((i) => (
+        <div
+          key={i}
+          style={{
+            background: colors.surfaceElevated,
+            border: `1px solid ${colors.border}`,
+            borderRadius: 10,
+            padding: '0.9rem',
+            height: 88,
+          }}
+        >
+          <div style={skelLine(60, 8)} />
+          <div style={{ ...skelLine(80, 18), marginTop: 10 }} />
+          <div style={{ ...skelLine(50, 8),  marginTop: 6  }} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function skelLine(width, height) {
+  return {
+    width, height,
+    background: colors.backgroundCard,
+    borderRadius: 4,
+    opacity: 0.7,
+  };
 }
 
 
@@ -202,7 +378,7 @@ function PerDimensionGrid({ latest }) {
 }
 
 
-function EmptyState({ onRun, running }) {
+function EmptyState({ onRun, running, mockMode }) {
   return (
     <div style={{
       background: colors.surfaceElevated,
@@ -211,11 +387,22 @@ function EmptyState({ onRun, running }) {
       padding: '2rem',
       textAlign: 'center',
     }}>
-      <h2 style={{ margin: 0 }}>No snapshots yet</h2>
+      <h2 style={{ margin: 0 }}>You have no snapshots yet</h2>
       <p style={{ color: colors.textSecondary, marginTop: 8 }}>
-        Click <strong>Run detection now</strong> to seed the demo with two synthetic
-        personas across 8 weeks. Both personas will produce nudges that flow
-        into the reset experience.
+        {mockMode ? (
+          <>
+            Click <strong>Run detection now</strong> to seed the demo with two
+            synthetic personas across 8 weeks. Both personas produce nudges that
+            flow into the reset experience.
+          </>
+        ) : (
+          <>
+            Click <strong>Run detection now</strong> to append this
+            week&rsquo;s Spotify snapshot. Reset Radar needs about 8 weeks of
+            history before it can fire a nudge - the first run just establishes
+            the baseline.
+          </>
+        )}
       </p>
       <button
         type="button"
@@ -224,14 +411,14 @@ function EmptyState({ onRun, running }) {
         disabled={running}
         style={{ marginTop: 12 }}
       >
-        {running ? 'Running...' : 'Run detection now'}
+        {running ? 'Running\u2026' : 'Run detection now'}
       </button>
     </div>
   );
 }
 
 
-function FooterNote() {
+function FooterNote({ mockMode, reasonerModel }) {
   return (
     <div style={{
       marginTop: '2rem',
@@ -243,23 +430,39 @@ function FooterNote() {
       color: colors.textMuted,
       lineHeight: 1.55,
     }}>
-      <strong style={{ color: colors.textSecondary }}>Mock mode is on.</strong>{' '}
-      No live Spotify calls. The 8-week timeline is generated from
-      <code style={{
-        margin: '0 0.3em',
-        padding: '0.1em 0.4em',
-        background: colors.surfaceElevated,
-        borderRadius: 3,
-        fontFamily: 'JetBrains Mono, monospace',
-        fontSize: '0.78rem',
-      }}>backend/mock_data/synthetic_weeks.json</code>.
-      The "sandbox" guarantee is UX-level: Spotify still records plays in
-      a real reset, so the reset playlist's plays still feed Spotify's
-      own model. Documented honestly across README, architecture.md, and
-      deck slide 9.
+      {mockMode ? (
+        <>
+          <strong style={{ color: colors.textSecondary }}>Mock mode is on.</strong>{' '}
+          No live Spotify calls. The 8-week timeline is generated from
+          <code style={inlineCode}>backend/mock_data/synthetic_weeks.json</code>.
+          The &ldquo;sandbox&rdquo; guarantee is UX-level: Spotify still records plays in
+          a real reset, so the reset playlist&rsquo;s plays still feed Spotify&rsquo;s
+          own model. Documented honestly across README, architecture.md, and
+          deck slide 9.
+        </>
+      ) : (
+        <>
+          <strong style={{ color: '#93c5fd' }}>Live Spotify mode.</strong>{' '}
+          Detection reads <code style={inlineCode}>/me/top/tracks</code> +
+          <code style={inlineCode}>/me/player/recently-played</code> +
+          <code style={inlineCode}>/me/tracks</code>, classifies language &amp;
+          mood via {reasonerModel || 'Groq'}, and appends one snapshot per run.
+          A weekly GitHub Action runs the same job every Monday at 09:00 UTC.
+        </>
+      )}
     </div>
   );
 }
+
+
+const inlineCode = {
+  margin: '0 0.3em',
+  padding: '0.1em 0.4em',
+  background: colors.surfaceElevated,
+  borderRadius: 3,
+  fontFamily: 'JetBrains Mono, monospace',
+  fontSize: '0.78rem',
+};
 
 
 const topRow = {

@@ -21,7 +21,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, Depends, Header, HTTPException, status
 from sqlalchemy import asc, desc
 
 from app.config import settings
@@ -130,10 +130,59 @@ def _has_active_session(db, user_id: str) -> bool:
 
 
 # ============================================================
-# The endpoint
+# Auth dependency (used by the GH Action workflow in R6+)
 # ============================================================
 
-@router.post("/run-weekly-detection")
+def require_jobs_token(
+    authorization: str | None = Header(default=None),
+) -> None:
+    """Enforce `Authorization: Bearer <JOBS_API_TOKEN>` when JOBS_API_TOKEN is set.
+
+    When `settings.jobs_api_token` is empty (the default for local dev
+    and the live mock-mode demo), this dependency passes through with
+    no enforcement, so the Dashboard's "Run detection now" button keeps
+    working without any token.
+
+    When the env var IS set (production deploys behind a public URL),
+    requests without a matching Bearer token receive a 401. The GitHub
+    Actions workflow (`.github/workflows/weekly-detection.yml`) sends
+    the matching token from `secrets.RESET_RADAR_API_TOKEN`.
+    """
+    expected = settings.jobs_api_token
+    if not expected:
+        return
+    if not authorization or not authorization.lower().startswith("bearer "):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Missing or malformed Authorization header.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    presented = authorization.split(None, 1)[1].strip()
+    if presented != expected:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid jobs API token.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+
+# ============================================================
+# Endpoints
+#
+# `/run-detection` is the canonical name per architecture §6 + §10
+# (the workflow file). `/run-weekly-detection` is kept as a backward-
+# compat alias so the R3 frontend's existing "Run detection now"
+# button keeps working without any client-side change.
+# ============================================================
+
+@router.post(
+    "/run-detection",
+    dependencies=[Depends(require_jobs_token)],
+)
+@router.post(
+    "/run-weekly-detection",
+    dependencies=[Depends(require_jobs_token)],
+)
 def run_weekly_detection(dry_run: bool = False) -> dict[str, Any]:
     """Recompute stuck scores + fire nudges for every user.
 

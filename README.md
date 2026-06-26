@@ -21,8 +21,8 @@
 | **R3** Frontend (mock-driven end-to-end) | React UI complete on top of mock backend | ✅ |
 | **R4** Spotify OAuth + read endpoints | Wire real Spotify Web API reads behind `MOCK_MODE=false` | ✅ |
 | **R5** Spotify write endpoints | Real playlist create / follow / save / delete | ✅ |
-| **R6** GitHub Action + polish | Lock weekly cron workflow, polish UI, lock demo script | ⏳ next |
-| **R7** Deploy + capture deck screenshots | Render (backend) + Vercel (frontend), capture 3 frames | ⏳ |
+| **R6** GitHub Action + polish | Lock weekly cron workflow, polish UI, lock demo script | ✅ |
+| **R7** Deploy + capture deck screenshots | Render (backend) + Vercel (frontend), capture 3 frames | ⏳ next |
 
 > **R3 is the demo-presentable stopping point.** Everything from R0
 > to R3 runs against synthetic fixtures with **zero Spotify API calls**.
@@ -240,10 +240,71 @@ both. The architecture wording was a forward-looking simplification.
   is still the same heuristic projection (`before × 0.6` on keep) used
   in mock mode. A measured `after_stuck_score` requires next Monday's
   cron to land a fresh weekly snapshot - that's R6 territory.
-- It does NOT add a "Login with Spotify" CTA to the frontend. The
-  frontend still defaults to mock mode; flipping `MOCK_MODE=false`
-  requires walking the `curl http://127.0.0.1:8000/auth/login` flow
-  manually for now (UI polish lands in R6).
+
+---
+
+## R6 -- Weekly cron + UI polish + demo script
+
+R6 closes the system-is-proactive story (the weekly GitHub Action) and
+the demo-readiness story (loading skeletons, mode badge, login CTA,
+five-step script).
+
+### GitHub Actions weekly cron
+
+File: [`.github/workflows/weekly-detection.yml`](.github/workflows/weekly-detection.yml)
+
+- Cron: **`0 9 * * 1`** (Mondays 09:00 UTC), per architecture §10.
+- Also `workflow_dispatch` so the Actions tab gets a manual "Run
+  workflow" button (with a `dry_run` toggle).
+- Calls `POST /jobs/run-detection` (the canonical name per
+  architecture §6). The legacy `/jobs/run-weekly-detection` is kept as
+  an alias so the R3 frontend's existing call point keeps working.
+- Auth: optional `Authorization: Bearer <RESET_RADAR_API_TOKEN>`,
+  matching the backend's `JOBS_API_TOKEN` env var. When the backend
+  leaves `JOBS_API_TOKEN` empty (local dev + the single-tenant demo
+  deploy), the workflow can also leave the secret empty and the call
+  succeeds unauthenticated.
+- Configure two GitHub repo secrets to enable:
+  - `RESET_RADAR_API_URL` &mdash; e.g. `https://reset-radar.onrender.com`
+  - `RESET_RADAR_API_TOKEN` &mdash; only if you set `JOBS_API_TOKEN` on the backend
+- Each run uploads `response.json` as an artefact (30-day retention)
+  and writes a per-run summary into the Actions UI.
+
+### Frontend polish
+
+- **Mode badge** in the top-right corner of the Dashboard: a green
+  pill when `MOCK_MODE=true`, a blue one when running against live
+  Spotify. The pill links the visible mode to the underlying truth so
+  nobody has to guess.
+- **Login with Spotify CTA**: appears next to the mode badge ONLY in
+  live mode AND when `/auth/me` reports `authenticated: false`. In
+  mock mode it stays hidden (OAuth is intentionally bypassed in mock
+  mode; showing a login button would be a lie).
+- **Loading skeletons** for the chart card + the per-dimension grid
+  while `GET /scores/history` is in flight. No more blank pane on
+  first paint or persona switch.
+- **Footer copy** branches on mode &mdash; mock-mode footer points at
+  `synthetic_weeks.json`; real-mode footer enumerates the Spotify
+  endpoints actually being read and names the LLM model in use.
+- Frontend now calls the canonical `/jobs/run-detection` and sends
+  `credentials: 'include'` so the R4 session cookie travels with the
+  request.
+
+### Demo script
+
+Five steps, **&le; 90 seconds**, cold-open &rarr; Keep outcome. See
+[`doc/DEMO_SCRIPT.md`](doc/DEMO_SCRIPT.md). It includes a pre-flight
+checklist, on-stage troubleshooting table, and a morning-of smoke
+check.
+
+### What R6 does NOT do (yet)
+
+- It does NOT deploy anything. R7 lands Render (backend) + Vercel
+  (frontend) and captures the deck screenshots.
+- It does NOT implement a real measured `after_stuck_score`. That
+  arrives naturally on the next weekly cron run after a Keep decision
+  in real mode; the frontend already labels the current value as a
+  projection.
 
 ---
 

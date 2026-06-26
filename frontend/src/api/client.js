@@ -9,6 +9,7 @@ const BASE = '/api';
 
 async function request(path, options = {}) {
   const res = await fetch(`${BASE}${path}`, {
+    credentials: 'include',                                           // R4 session cookie travels with the request
     headers: { 'Content-Type': 'application/json' },
     ...options,
   });
@@ -28,6 +29,11 @@ export const api = {
   // === Meta ===
   health: () => request('/health'),
 
+  // === Auth (R4: PKCE OAuth) ===
+  whoami: () => request('/auth/me'),
+  loginUrl: () => `${BASE}/auth/login`,                               // fed straight to window.location.href
+  logout: () => request('/auth/logout', { method: 'POST' }),
+
   // === Dashboard (users + scores) ===
   listUsers: () => request('/users'),
   getScoreHistory: (userId) =>
@@ -35,7 +41,7 @@ export const api = {
 
   // === Jobs (manual demo trigger) ===
   runDetection: () =>
-    request('/jobs/run-weekly-detection', {
+    request('/jobs/run-detection', {                                  // canonical name per architecture §6
       method: 'POST',
       body: JSON.stringify({}),
     }),

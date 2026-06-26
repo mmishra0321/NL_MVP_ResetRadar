@@ -78,6 +78,19 @@ class Settings(BaseSettings):
     # === Reset session trial window ===
     trial_window_days: int = Field(default=10, ge=1)
 
+    # === Jobs API auth (R6 GitHub Action) ===
+    jobs_api_token: str = Field(
+        default="",
+        description=(
+            "Optional shared secret required on POST /jobs/run-detection. "
+            "When empty (the default for local dev + the live demo), the "
+            "endpoint is open and the workflow runs unauthenticated against "
+            "a single-tenant deployment. When set, the GitHub Actions "
+            "workflow must send `Authorization: Bearer <token>` matching "
+            "this value."
+        ),
+    )
+
     # === Operational knobs ===
     max_candidates_from_search: int = Field(default=80, ge=20)
     spotify_search_page_size: int = Field(default=10, ge=1, le=10)
