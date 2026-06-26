@@ -112,11 +112,28 @@ def search_candidates(
     `settings.max_candidates_from_search` (default 80).
     """
     if settings.mock_mode:
-        candidates = _read_mock_json("mock_candidates.json")
-        if not isinstance(candidates, list):
-            log.warning("mock_candidates.json is not a list; returning empty pool.")
+        payload = _read_mock_json("mock_candidates.json")
+        if isinstance(payload, dict) and "candidates" in payload:
+            candidates = payload["candidates"]                      # canonical envelope
+        elif isinstance(payload, list):
+            candidates = payload                                    # legacy shape
+        else:
+            log.warning("mock_candidates.json shape unrecognised; returning empty pool.")
             return []
-        return candidates[: target_pool_size or settings.max_candidates_from_search]
+        if not isinstance(candidates, list):
+            return []
+        # Filter by scope BEFORE trimming so the per-dimension budget
+        # actually lands on the requested scope (otherwise the first 80
+        # entries skew toward whichever scope appears first in the file).
+        scope_set = set(scope_dimensions)
+        if scope_set:
+            filtered = [
+                c for c in candidates
+                if c.get("scope_origin") in scope_set or c.get("scope_origin") is None
+            ]
+        else:
+            filtered = list(candidates)
+        return filtered[: target_pool_size or settings.max_candidates_from_search]
     raise NotImplementedError(
         "Real /search paginated candidate generation lands in R4."
     )

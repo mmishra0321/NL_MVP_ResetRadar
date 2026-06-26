@@ -180,6 +180,44 @@ def classify_mood(
     )
 
 
+_RANK_SYSTEM_PROMPT = """\
+You are Reset Radar's track-ranking assistant. The user is a Spotify
+Premium listener whose listening has narrowed onto one dimension; they
+have explicitly chosen ONE reset SCOPE (genre / language / era / mood)
+to step outside their current pattern.
+
+You will receive:
+- the chosen scope dimensions (most commonly a single one)
+- an optional free-text intent describing the user's preference
+- a candidate pool of tracks (already filtered by scope on the backend)
+
+You MUST:
+1. Pick exactly `target_count` tracks from the pool, ordered most to least
+   recommended.
+2. Use ONLY `spotify_track_id` values that appear in the candidate pool.
+   Do NOT invent IDs or use any external knowledge of Spotify catalog
+   identifiers - hallucinated IDs are dropped by a downstream guard and
+   would waste a slot.
+3. For each pick, write a `why` string (<= 160 characters) that:
+   - is written directly to the user (second person, "you")
+   - references the chosen reset scope by name
+   - explains why this track is a good bridge from where the user is
+     stuck to something new (NOT a marketing pitch; honest framing)
+   - never mentions "AI", "LLM", "Groq", or implementation details
+
+Return JSON of exactly this shape:
+{
+  "picks": [
+    {"spotify_track_id": "<id from pool>", "score": <float 0..1>, "why": "<<=160 chars>"},
+    ...
+  ]
+}
+
+Pick exactly `target_count` items. Score must be in [0, 1] reflecting
+how strong a recommendation this is (1 = best fit for this reset).
+"""
+
+
 def rank_and_explain(
     *,
     scope_dimensions: list[str],
@@ -196,12 +234,71 @@ def rank_and_explain(
             "why": str (max 160 chars),
         }
 
-    Real implementation lands in R2 (Reset engine · mock candidates).
+    Hallucination guard: the caller (`reset_engine._validate_picks`)
+    drops any track_id not in the candidate pool. This function does NOT
+    enforce that on its own - the system prompt asks the LLM to comply,
+    and the guard catches the (rare) failures.
     """
-    raise NotImplementedError(
-        "rank_and_explain is implemented in R2; "
-        "do not call it in R0 scaffold tests."
+    if not candidates:
+        raise ValueError("rank_and_explain called with empty candidate pool.")
+
+    # Compact candidate dicts for the prompt - the LLM only needs the
+    # fields it can reason about (title, artist, genres, language, era,
+    # mood). The spotify_track_id is the join key it MUST echo back.
+    compact = [
+        {
+            "spotify_track_id": c["spotify_track_id"],
+            "title": c["title"],
+            "artist": c["artist"],
+            "genres": c.get("genres", []),
+            "language": c.get("language"),
+            "era": c.get("era"),
+            "mood": c.get("mood"),
+        }
+        for c in candidates
+    ]
+
+    user_payload = {
+        "scope_dimensions": scope_dimensions,
+        "free_text_intent": free_text_intent or "",
+        "target_count": target_count,
+        "candidates": compact,
+    }
+    user_msg = json.dumps(user_payload, ensure_ascii=False)
+
+    # Heuristic max_tokens: 20 picks * ~200 tokens/pick (id + score + why
+    # + JSON overhead) ≈ 4000. Round up to give headroom.
+    payload = chat_json(
+        system=_RANK_SYSTEM_PROMPT,
+        user=user_msg,
+        model=settings.groq_model_reasoner,
+        temperature=0.3,
+        max_tokens=4096,
     )
+
+    picks = payload.get("picks") if isinstance(payload, dict) else None
+    if not isinstance(picks, list):
+        raise GroqError(
+            f"rank_and_explain response missing 'picks' list; got {payload!r}"
+        )
+
+    normalised: list[dict[str, Any]] = []
+    for entry in picks:
+        if not isinstance(entry, dict):
+            continue
+        tid = entry.get("spotify_track_id")
+        if not isinstance(tid, str) or not tid:
+            continue
+        score = float(entry.get("score", 0.5))
+        score = max(0.0, min(1.0, score))
+        why = str(entry.get("why", ""))[:200]
+        normalised.append({
+            "spotify_track_id": tid,
+            "score": score,
+            "why": why,
+        })
+
+    return normalised
 
 
 __all__ = [

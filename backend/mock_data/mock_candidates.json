@@ -1,1 +1,3240 @@
-[]
+{
+  "_schema_version": 1,
+  "_generated_by": "scripts/generate_mock_candidates.py",
+  "_per_scope_count": 60,
+  "candidates": [
+    {
+      "spotify_track_id": "mock-genre-000",
+      "title": "Black Orpheus",
+      "artist": "Vince Guaraldi Trio",
+      "album": null,
+      "genres": [
+        "bossa-nova",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-001",
+      "title": "Aguas de Marco",
+      "artist": "Elis Regina",
+      "album": null,
+      "genres": [
+        "bossa-nova"
+      ],
+      "language": "pt",
+      "era": "1970s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-002",
+      "title": "Glassworks",
+      "artist": "Philip Glass",
+      "album": null,
+      "genres": [
+        "minimalism",
+        "classical"
+      ],
+      "language": "instrumental",
+      "era": "1980s",
+      "mood": "focus",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-003",
+      "title": "Round Midnight",
+      "artist": "Thelonious Monk",
+      "album": null,
+      "genres": [
+        "bebop",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1940s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-004",
+      "title": "Take Five",
+      "artist": "Dave Brubeck Quartet",
+      "album": null,
+      "genres": [
+        "cool-jazz",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1950s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-005",
+      "title": "Cantaloupe Island",
+      "artist": "Herbie Hancock",
+      "album": null,
+      "genres": [
+        "jazz-funk",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "energetic",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-006",
+      "title": "Metamorphosis Two",
+      "artist": "Philip Glass",
+      "album": null,
+      "genres": [
+        "minimalism",
+        "classical"
+      ],
+      "language": "instrumental",
+      "era": "1980s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-007",
+      "title": "Sandcastles",
+      "artist": "Beyonce",
+      "album": null,
+      "genres": [
+        "neo-soul",
+        "r&b"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-008",
+      "title": "Pyramid Schemes",
+      "artist": "Solange",
+      "album": null,
+      "genres": [
+        "neo-soul",
+        "r&b"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-009",
+      "title": "Blue in Green",
+      "artist": "Miles Davis",
+      "album": null,
+      "genres": [
+        "modal-jazz",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1950s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-010",
+      "title": "Stir of Echoes",
+      "artist": "Olafur Arnalds",
+      "album": null,
+      "genres": [
+        "neo-classical",
+        "ambient"
+      ],
+      "language": "instrumental",
+      "era": "2010s",
+      "mood": "focus",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-011",
+      "title": "Metamorphosis Two",
+      "artist": "Philip Glass",
+      "album": null,
+      "genres": [
+        "minimalism",
+        "classical"
+      ],
+      "language": "instrumental",
+      "era": "1980s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-012",
+      "title": "Spiegel im Spiegel",
+      "artist": "Arvo Part",
+      "album": null,
+      "genres": [
+        "minimalism",
+        "classical"
+      ],
+      "language": "instrumental",
+      "era": "1970s",
+      "mood": "focus",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-013",
+      "title": "So What",
+      "artist": "Miles Davis",
+      "album": null,
+      "genres": [
+        "modal-jazz",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1950s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-014",
+      "title": "Take Five",
+      "artist": "Dave Brubeck Quartet",
+      "album": null,
+      "genres": [
+        "cool-jazz",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1950s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-015",
+      "title": "Cantaloupe Island",
+      "artist": "Herbie Hancock",
+      "album": null,
+      "genres": [
+        "jazz-funk",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "energetic",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-016",
+      "title": "Reflections",
+      "artist": "MisterWives",
+      "album": null,
+      "genres": [
+        "indie-pop",
+        "synth-pop"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-017",
+      "title": "Strobe",
+      "artist": "Deadmau5",
+      "album": null,
+      "genres": [
+        "progressive-house",
+        "electronic"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "focus",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-018",
+      "title": "Garota de Ipanema",
+      "artist": "Joao Gilberto",
+      "album": null,
+      "genres": [
+        "bossa-nova"
+      ],
+      "language": "pt",
+      "era": "1960s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-019",
+      "title": "Sketches of Spain",
+      "artist": "Miles Davis",
+      "album": null,
+      "genres": [
+        "latin-jazz",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "nostalgic",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-020",
+      "title": "The Way",
+      "artist": "Daniel Caesar",
+      "album": null,
+      "genres": [
+        "neo-soul",
+        "r&b"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-021",
+      "title": "Plastic",
+      "artist": "Moses Sumney",
+      "album": null,
+      "genres": [
+        "art-pop"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-022",
+      "title": "On Green Dolphin Street",
+      "artist": "Bill Evans Trio",
+      "album": null,
+      "genres": [
+        "cool-jazz",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-023",
+      "title": "Saman",
+      "artist": "Olafur Arnalds",
+      "album": null,
+      "genres": [
+        "neo-classical"
+      ],
+      "language": "instrumental",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-024",
+      "title": "Selected Ambient Works",
+      "artist": "Aphex Twin",
+      "album": null,
+      "genres": [
+        "ambient",
+        "electronic"
+      ],
+      "language": "instrumental",
+      "era": "1990s",
+      "mood": "focus",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-025",
+      "title": "Acknowledgement",
+      "artist": "John Coltrane",
+      "album": null,
+      "genres": [
+        "spiritual-jazz",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "focus",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-026",
+      "title": "Clair de Lune",
+      "artist": "Claude Debussy",
+      "album": null,
+      "genres": [
+        "impressionism",
+        "classical"
+      ],
+      "language": "instrumental",
+      "era": "1890s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-027",
+      "title": "Saman",
+      "artist": "Olafur Arnalds",
+      "album": null,
+      "genres": [
+        "neo-classical"
+      ],
+      "language": "instrumental",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-028",
+      "title": "Glassworks",
+      "artist": "Philip Glass",
+      "album": null,
+      "genres": [
+        "minimalism",
+        "classical"
+      ],
+      "language": "instrumental",
+      "era": "1980s",
+      "mood": "focus",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-029",
+      "title": "Resonance",
+      "artist": "HOME",
+      "album": null,
+      "genres": [
+        "synthwave",
+        "electronic"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "nostalgic",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-030",
+      "title": "Cranes in the Sky",
+      "artist": "Solange",
+      "album": null,
+      "genres": [
+        "neo-soul",
+        "r&b"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-031",
+      "title": "Plastic",
+      "artist": "Moses Sumney",
+      "album": null,
+      "genres": [
+        "art-pop"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-032",
+      "title": "Black Orpheus",
+      "artist": "Vince Guaraldi Trio",
+      "album": null,
+      "genres": [
+        "bossa-nova",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-033",
+      "title": "Blue in Green",
+      "artist": "Miles Davis",
+      "album": null,
+      "genres": [
+        "modal-jazz",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1950s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-034",
+      "title": "Naima",
+      "artist": "John Coltrane",
+      "album": null,
+      "genres": [
+        "modal-jazz",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1950s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-035",
+      "title": "Stir of Echoes",
+      "artist": "Olafur Arnalds",
+      "album": null,
+      "genres": [
+        "neo-classical",
+        "ambient"
+      ],
+      "language": "instrumental",
+      "era": "2010s",
+      "mood": "focus",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-036",
+      "title": "So What",
+      "artist": "Miles Davis",
+      "album": null,
+      "genres": [
+        "modal-jazz",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1950s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-037",
+      "title": "Cantaloupe Island",
+      "artist": "Herbie Hancock",
+      "album": null,
+      "genres": [
+        "jazz-funk",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "energetic",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-038",
+      "title": "On Green Dolphin Street",
+      "artist": "Bill Evans Trio",
+      "album": null,
+      "genres": [
+        "cool-jazz",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-039",
+      "title": "Gymnopedie No. 1",
+      "artist": "Erik Satie",
+      "album": null,
+      "genres": [
+        "impressionism",
+        "classical"
+      ],
+      "language": "instrumental",
+      "era": "1890s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-040",
+      "title": "Brazil",
+      "artist": "Antonio Carlos Jobim",
+      "album": null,
+      "genres": [
+        "bossa-nova",
+        "samba"
+      ],
+      "language": "pt",
+      "era": "1960s",
+      "mood": "energetic",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-041",
+      "title": "So What",
+      "artist": "Miles Davis",
+      "album": null,
+      "genres": [
+        "modal-jazz",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1950s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-042",
+      "title": "Blue in Green",
+      "artist": "Miles Davis",
+      "album": null,
+      "genres": [
+        "modal-jazz",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1950s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-043",
+      "title": "Saman",
+      "artist": "Olafur Arnalds",
+      "album": null,
+      "genres": [
+        "neo-classical"
+      ],
+      "language": "instrumental",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-044",
+      "title": "Avril 14th",
+      "artist": "Aphex Twin",
+      "album": null,
+      "genres": [
+        "electronic",
+        "ambient"
+      ],
+      "language": "instrumental",
+      "era": "2000s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-045",
+      "title": "Blessed",
+      "artist": "Daniel Caesar",
+      "album": null,
+      "genres": [
+        "neo-soul",
+        "r&b"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-046",
+      "title": "Brazil",
+      "artist": "Antonio Carlos Jobim",
+      "album": null,
+      "genres": [
+        "bossa-nova",
+        "samba"
+      ],
+      "language": "pt",
+      "era": "1960s",
+      "mood": "energetic",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-047",
+      "title": "Black Orpheus",
+      "artist": "Vince Guaraldi Trio",
+      "album": null,
+      "genres": [
+        "bossa-nova",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-048",
+      "title": "Glassworks",
+      "artist": "Philip Glass",
+      "album": null,
+      "genres": [
+        "minimalism",
+        "classical"
+      ],
+      "language": "instrumental",
+      "era": "1980s",
+      "mood": "focus",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-049",
+      "title": "Gymnopedie No. 1",
+      "artist": "Erik Satie",
+      "album": null,
+      "genres": [
+        "impressionism",
+        "classical"
+      ],
+      "language": "instrumental",
+      "era": "1890s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-050",
+      "title": "Naima",
+      "artist": "John Coltrane",
+      "album": null,
+      "genres": [
+        "modal-jazz",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1950s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-051",
+      "title": "Round Midnight",
+      "artist": "Thelonious Monk",
+      "album": null,
+      "genres": [
+        "bebop",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1940s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-052",
+      "title": "Best Part",
+      "artist": "Daniel Caesar",
+      "album": null,
+      "genres": [
+        "neo-soul"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-053",
+      "title": "An Ending (Ascent)",
+      "artist": "Brian Eno",
+      "album": null,
+      "genres": [
+        "ambient",
+        "electronic"
+      ],
+      "language": "instrumental",
+      "era": "1980s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-054",
+      "title": "Black Orpheus",
+      "artist": "Vince Guaraldi Trio",
+      "album": null,
+      "genres": [
+        "bossa-nova",
+        "jazz"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-055",
+      "title": "Reflections",
+      "artist": "MisterWives",
+      "album": null,
+      "genres": [
+        "indie-pop",
+        "synth-pop"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-056",
+      "title": "Sandcastles",
+      "artist": "Beyonce",
+      "album": null,
+      "genres": [
+        "neo-soul",
+        "r&b"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-057",
+      "title": "Doomed",
+      "artist": "Moses Sumney",
+      "album": null,
+      "genres": [
+        "art-pop",
+        "neo-soul"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-058",
+      "title": "Cranes in the Sky",
+      "artist": "Solange",
+      "album": null,
+      "genres": [
+        "neo-soul",
+        "r&b"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-genre-059",
+      "title": "Best Part",
+      "artist": "Daniel Caesar",
+      "album": null,
+      "genres": [
+        "neo-soul"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "chill",
+      "scope_origin": "genre"
+    },
+    {
+      "spotify_track_id": "mock-language-000",
+      "title": "Tous les Memes",
+      "artist": "Stromae",
+      "album": null,
+      "genres": [
+        "french-pop"
+      ],
+      "language": "fr",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-001",
+      "title": "Jeevamshamayi",
+      "artist": "K.S. Harisankar",
+      "album": null,
+      "genres": [
+        "malayalam-film-pop"
+      ],
+      "language": "ml",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-002",
+      "title": "Mast Magan",
+      "artist": "Arijit Singh",
+      "album": null,
+      "genres": [
+        "hindi-film-pop"
+      ],
+      "language": "hi",
+      "era": "2010s",
+      "mood": "chill",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-003",
+      "title": "Jab Tak",
+      "artist": "Armaan Malik",
+      "album": null,
+      "genres": [
+        "hindi-film-pop"
+      ],
+      "language": "hi",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-004",
+      "title": "Channa Mereya",
+      "artist": "Arijit Singh",
+      "album": null,
+      "genres": [
+        "hindi-film-pop"
+      ],
+      "language": "hi",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-005",
+      "title": "Akale",
+      "artist": "Vidhu Prathap",
+      "album": null,
+      "genres": [
+        "malayalam-film-pop"
+      ],
+      "language": "ml",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-006",
+      "title": "Con Altura",
+      "artist": "Rosalia",
+      "album": null,
+      "genres": [
+        "reggaeton"
+      ],
+      "language": "es",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-007",
+      "title": "Stay With Me",
+      "artist": "Punch",
+      "album": null,
+      "genres": [
+        "k-pop",
+        "k-ballad"
+      ],
+      "language": "ko",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-008",
+      "title": "Non, Je Ne Regrette",
+      "artist": "Edith Piaf",
+      "album": null,
+      "genres": [
+        "chanson"
+      ],
+      "language": "fr",
+      "era": "1960s",
+      "mood": "nostalgic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-009",
+      "title": "Kesariya",
+      "artist": "Arijit Singh",
+      "album": null,
+      "genres": [
+        "hindi-film-pop"
+      ],
+      "language": "hi",
+      "era": "2020s",
+      "mood": "nostalgic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-010",
+      "title": "Jeevamshamayi",
+      "artist": "K.S. Harisankar",
+      "album": null,
+      "genres": [
+        "malayalam-film-pop"
+      ],
+      "language": "ml",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-011",
+      "title": "Aaro Nee Aaro",
+      "artist": "K.J. Yesudas",
+      "album": null,
+      "genres": [
+        "malayalam-film-pop"
+      ],
+      "language": "ml",
+      "era": "1970s",
+      "mood": "nostalgic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-012",
+      "title": "Non, Je Ne Regrette",
+      "artist": "Edith Piaf",
+      "album": null,
+      "genres": [
+        "chanson"
+      ],
+      "language": "fr",
+      "era": "1960s",
+      "mood": "nostalgic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-013",
+      "title": "Akale",
+      "artist": "Vidhu Prathap",
+      "album": null,
+      "genres": [
+        "malayalam-film-pop"
+      ],
+      "language": "ml",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-014",
+      "title": "Bailando",
+      "artist": "Enrique Iglesias",
+      "album": null,
+      "genres": [
+        "latin-pop"
+      ],
+      "language": "es",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-015",
+      "title": "Aguas de Marco",
+      "artist": "Elis Regina",
+      "album": null,
+      "genres": [
+        "bossa-nova"
+      ],
+      "language": "pt",
+      "era": "1970s",
+      "mood": "chill",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-016",
+      "title": "Munbe Vaa",
+      "artist": "Naresh Iyer",
+      "album": null,
+      "genres": [
+        "tamil-film-pop"
+      ],
+      "language": "ta",
+      "era": "2000s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-017",
+      "title": "Tous les Memes",
+      "artist": "Stromae",
+      "album": null,
+      "genres": [
+        "french-pop"
+      ],
+      "language": "fr",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-018",
+      "title": "Nila Kaigirathu",
+      "artist": "Madhushree",
+      "album": null,
+      "genres": [
+        "tamil-film-pop"
+      ],
+      "language": "ta",
+      "era": "2000s",
+      "mood": "chill",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-019",
+      "title": "Tous les Memes",
+      "artist": "Stromae",
+      "album": null,
+      "genres": [
+        "french-pop"
+      ],
+      "language": "fr",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-020",
+      "title": "Vivir Mi Vida",
+      "artist": "Marc Anthony",
+      "album": null,
+      "genres": [
+        "salsa",
+        "latin-pop"
+      ],
+      "language": "es",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-021",
+      "title": "Jeevamshamayi",
+      "artist": "K.S. Harisankar",
+      "album": null,
+      "genres": [
+        "malayalam-film-pop"
+      ],
+      "language": "ml",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-022",
+      "title": "Vivir Mi Vida",
+      "artist": "Marc Anthony",
+      "album": null,
+      "genres": [
+        "salsa",
+        "latin-pop"
+      ],
+      "language": "es",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-023",
+      "title": "Garota de Ipanema",
+      "artist": "Joao Gilberto",
+      "album": null,
+      "genres": [
+        "bossa-nova"
+      ],
+      "language": "pt",
+      "era": "1960s",
+      "mood": "chill",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-024",
+      "title": "Tous les Memes",
+      "artist": "Stromae",
+      "album": null,
+      "genres": [
+        "french-pop"
+      ],
+      "language": "fr",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-025",
+      "title": "Pee Loon",
+      "artist": "Mohit Chauhan",
+      "album": null,
+      "genres": [
+        "hindi-film-pop"
+      ],
+      "language": "hi",
+      "era": "2010s",
+      "mood": "nostalgic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-026",
+      "title": "Why This Kolaveri Di",
+      "artist": "Dhanush",
+      "album": null,
+      "genres": [
+        "tamil-film-pop"
+      ],
+      "language": "ta",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-027",
+      "title": "Stay With Me",
+      "artist": "Punch",
+      "album": null,
+      "genres": [
+        "k-pop",
+        "k-ballad"
+      ],
+      "language": "ko",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-028",
+      "title": "Despacito",
+      "artist": "Luis Fonsi",
+      "album": null,
+      "genres": [
+        "reggaeton",
+        "latin-pop"
+      ],
+      "language": "es",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-029",
+      "title": "Nila Kaigirathu",
+      "artist": "Madhushree",
+      "album": null,
+      "genres": [
+        "tamil-film-pop"
+      ],
+      "language": "ta",
+      "era": "2000s",
+      "mood": "chill",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-030",
+      "title": "Akale",
+      "artist": "Vidhu Prathap",
+      "album": null,
+      "genres": [
+        "malayalam-film-pop"
+      ],
+      "language": "ml",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-031",
+      "title": "Vaseegara",
+      "artist": "Bombay Jayashri",
+      "album": null,
+      "genres": [
+        "tamil-film-pop"
+      ],
+      "language": "ta",
+      "era": "2000s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-032",
+      "title": "Spring Day",
+      "artist": "BTS",
+      "album": null,
+      "genres": [
+        "k-pop"
+      ],
+      "language": "ko",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-033",
+      "title": "Nila Kaigirathu",
+      "artist": "Madhushree",
+      "album": null,
+      "genres": [
+        "tamil-film-pop"
+      ],
+      "language": "ta",
+      "era": "2000s",
+      "mood": "chill",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-034",
+      "title": "Eight",
+      "artist": "IU",
+      "album": null,
+      "genres": [
+        "k-pop"
+      ],
+      "language": "ko",
+      "era": "2020s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-035",
+      "title": "La Vie en Rose",
+      "artist": "Edith Piaf",
+      "album": null,
+      "genres": [
+        "chanson"
+      ],
+      "language": "fr",
+      "era": "1940s",
+      "mood": "nostalgic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-036",
+      "title": "Jab Tak",
+      "artist": "Armaan Malik",
+      "album": null,
+      "genres": [
+        "hindi-film-pop"
+      ],
+      "language": "hi",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-037",
+      "title": "Vaseegara",
+      "artist": "Bombay Jayashri",
+      "album": null,
+      "genres": [
+        "tamil-film-pop"
+      ],
+      "language": "ta",
+      "era": "2000s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-038",
+      "title": "Je Te Promets",
+      "artist": "Zaz",
+      "album": null,
+      "genres": [
+        "french-pop"
+      ],
+      "language": "fr",
+      "era": "2010s",
+      "mood": "chill",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-039",
+      "title": "Channa Mereya",
+      "artist": "Arijit Singh",
+      "album": null,
+      "genres": [
+        "hindi-film-pop"
+      ],
+      "language": "hi",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-040",
+      "title": "Garota de Ipanema",
+      "artist": "Joao Gilberto",
+      "album": null,
+      "genres": [
+        "bossa-nova"
+      ],
+      "language": "pt",
+      "era": "1960s",
+      "mood": "chill",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-041",
+      "title": "Jab Tak",
+      "artist": "Armaan Malik",
+      "album": null,
+      "genres": [
+        "hindi-film-pop"
+      ],
+      "language": "hi",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-042",
+      "title": "Why This Kolaveri Di",
+      "artist": "Dhanush",
+      "album": null,
+      "genres": [
+        "tamil-film-pop"
+      ],
+      "language": "ta",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-043",
+      "title": "Theera Ula",
+      "artist": "A.R. Rahman",
+      "album": null,
+      "genres": [
+        "tamil-film-pop"
+      ],
+      "language": "ta",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-044",
+      "title": "Vaseegara",
+      "artist": "Bombay Jayashri",
+      "album": null,
+      "genres": [
+        "tamil-film-pop"
+      ],
+      "language": "ta",
+      "era": "2000s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-045",
+      "title": "Tum Hi Ho",
+      "artist": "Arijit Singh",
+      "album": null,
+      "genres": [
+        "hindi-film-pop"
+      ],
+      "language": "hi",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-046",
+      "title": "Through the Night",
+      "artist": "IU",
+      "album": null,
+      "genres": [
+        "k-pop",
+        "k-ballad"
+      ],
+      "language": "ko",
+      "era": "2010s",
+      "mood": "chill",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-047",
+      "title": "Burbujas de Amor",
+      "artist": "Juan Luis Guerra",
+      "album": null,
+      "genres": [
+        "bachata",
+        "latin-pop"
+      ],
+      "language": "es",
+      "era": "1990s",
+      "mood": "chill",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-048",
+      "title": "Bailando",
+      "artist": "Enrique Iglesias",
+      "album": null,
+      "genres": [
+        "latin-pop"
+      ],
+      "language": "es",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-049",
+      "title": "Malamente",
+      "artist": "Rosalia",
+      "album": null,
+      "genres": [
+        "flamenco-pop",
+        "latin-pop"
+      ],
+      "language": "es",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-050",
+      "title": "Tum Hi Ho",
+      "artist": "Arijit Singh",
+      "album": null,
+      "genres": [
+        "hindi-film-pop"
+      ],
+      "language": "hi",
+      "era": "2010s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-051",
+      "title": "Aaro Nee Aaro",
+      "artist": "K.J. Yesudas",
+      "album": null,
+      "genres": [
+        "malayalam-film-pop"
+      ],
+      "language": "ml",
+      "era": "1970s",
+      "mood": "nostalgic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-052",
+      "title": "Lenha",
+      "artist": "Tim Maia",
+      "album": null,
+      "genres": [
+        "mpb",
+        "soul"
+      ],
+      "language": "pt",
+      "era": "1970s",
+      "mood": "energetic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-053",
+      "title": "Kesariya",
+      "artist": "Arijit Singh",
+      "album": null,
+      "genres": [
+        "hindi-film-pop"
+      ],
+      "language": "hi",
+      "era": "2020s",
+      "mood": "nostalgic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-054",
+      "title": "Non, Je Ne Regrette",
+      "artist": "Edith Piaf",
+      "album": null,
+      "genres": [
+        "chanson"
+      ],
+      "language": "fr",
+      "era": "1960s",
+      "mood": "nostalgic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-055",
+      "title": "Garota de Ipanema",
+      "artist": "Joao Gilberto",
+      "album": null,
+      "genres": [
+        "bossa-nova"
+      ],
+      "language": "pt",
+      "era": "1960s",
+      "mood": "chill",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-056",
+      "title": "Je Te Promets",
+      "artist": "Zaz",
+      "album": null,
+      "genres": [
+        "french-pop"
+      ],
+      "language": "fr",
+      "era": "2010s",
+      "mood": "chill",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-057",
+      "title": "Through the Night",
+      "artist": "IU",
+      "album": null,
+      "genres": [
+        "k-pop",
+        "k-ballad"
+      ],
+      "language": "ko",
+      "era": "2010s",
+      "mood": "chill",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-058",
+      "title": "Kesariya",
+      "artist": "Arijit Singh",
+      "album": null,
+      "genres": [
+        "hindi-film-pop"
+      ],
+      "language": "hi",
+      "era": "2020s",
+      "mood": "nostalgic",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-language-059",
+      "title": "Vaseegara",
+      "artist": "Bombay Jayashri",
+      "album": null,
+      "genres": [
+        "tamil-film-pop"
+      ],
+      "language": "ta",
+      "era": "2000s",
+      "mood": "melancholy",
+      "scope_origin": "language"
+    },
+    {
+      "spotify_track_id": "mock-era-000",
+      "title": "The Sound of Silence",
+      "artist": "Simon and Garfunkel",
+      "album": null,
+      "genres": [
+        "folk-rock"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-001",
+      "title": "I Will Always Love You",
+      "artist": "Whitney Houston",
+      "album": null,
+      "genres": [
+        "pop",
+        "ballad"
+      ],
+      "language": "en",
+      "era": "1990s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-002",
+      "title": "Suzanne",
+      "artist": "Leonard Cohen",
+      "album": null,
+      "genres": [
+        "folk",
+        "singer-songwriter"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-003",
+      "title": "How Soon Is Now",
+      "artist": "The Smiths",
+      "album": null,
+      "genres": [
+        "alt-rock"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-004",
+      "title": "Sympathy for the Devil",
+      "artist": "The Rolling Stones",
+      "album": null,
+      "genres": [
+        "classic-rock"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-005",
+      "title": "Like a Rolling Stone",
+      "artist": "Bob Dylan",
+      "album": null,
+      "genres": [
+        "folk-rock"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-006",
+      "title": "Crazy",
+      "artist": "Gnarls Barkley",
+      "album": null,
+      "genres": [
+        "neo-soul",
+        "alt-pop"
+      ],
+      "language": "en",
+      "era": "2000s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-007",
+      "title": "Wonderwall",
+      "artist": "Oasis",
+      "album": null,
+      "genres": [
+        "britpop",
+        "alt-rock"
+      ],
+      "language": "en",
+      "era": "1990s",
+      "mood": "nostalgic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-008",
+      "title": "Yesterday",
+      "artist": "The Beatles",
+      "album": null,
+      "genres": [
+        "pop-rock"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-009",
+      "title": "Tainted Love",
+      "artist": "Soft Cell",
+      "album": null,
+      "genres": [
+        "synth-pop",
+        "new-wave"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-010",
+      "title": "Imagine",
+      "artist": "John Lennon",
+      "album": null,
+      "genres": [
+        "folk-pop"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "nostalgic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-011",
+      "title": "Good Vibrations",
+      "artist": "The Beach Boys",
+      "album": null,
+      "genres": [
+        "pop-rock"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-012",
+      "title": "Black Hole Sun",
+      "artist": "Soundgarden",
+      "album": null,
+      "genres": [
+        "grunge"
+      ],
+      "language": "en",
+      "era": "1990s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-013",
+      "title": "Yesterday",
+      "artist": "The Beatles",
+      "album": null,
+      "genres": [
+        "pop-rock"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-014",
+      "title": "A Day in the Life",
+      "artist": "The Beatles",
+      "album": null,
+      "genres": [
+        "psychedelic-rock"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "nostalgic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-015",
+      "title": "I Will Always Love You",
+      "artist": "Whitney Houston",
+      "album": null,
+      "genres": [
+        "pop",
+        "ballad"
+      ],
+      "language": "en",
+      "era": "1990s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-016",
+      "title": "Black Hole Sun",
+      "artist": "Soundgarden",
+      "album": null,
+      "genres": [
+        "grunge"
+      ],
+      "language": "en",
+      "era": "1990s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-017",
+      "title": "How Soon Is Now",
+      "artist": "The Smiths",
+      "album": null,
+      "genres": [
+        "alt-rock"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-018",
+      "title": "A Day in the Life",
+      "artist": "The Beatles",
+      "album": null,
+      "genres": [
+        "psychedelic-rock"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "nostalgic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-019",
+      "title": "Heroes",
+      "artist": "David Bowie",
+      "album": null,
+      "genres": [
+        "art-rock"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-020",
+      "title": "Black Hole Sun",
+      "artist": "Soundgarden",
+      "album": null,
+      "genres": [
+        "grunge"
+      ],
+      "language": "en",
+      "era": "1990s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-021",
+      "title": "Yesterday",
+      "artist": "The Beatles",
+      "album": null,
+      "genres": [
+        "pop-rock"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-022",
+      "title": "Just Like Heaven",
+      "artist": "The Cure",
+      "album": null,
+      "genres": [
+        "alt-rock",
+        "new-wave"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-023",
+      "title": "Hey Jude",
+      "artist": "The Beatles",
+      "album": null,
+      "genres": [
+        "pop-rock"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "nostalgic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-024",
+      "title": "Tainted Love",
+      "artist": "Soft Cell",
+      "album": null,
+      "genres": [
+        "synth-pop",
+        "new-wave"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-025",
+      "title": "Hey Ya",
+      "artist": "OutKast",
+      "album": null,
+      "genres": [
+        "hip-hop",
+        "funk"
+      ],
+      "language": "en",
+      "era": "2000s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-026",
+      "title": "Hotel California",
+      "artist": "Eagles",
+      "album": null,
+      "genres": [
+        "soft-rock"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "nostalgic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-027",
+      "title": "I Will Always Love You",
+      "artist": "Whitney Houston",
+      "album": null,
+      "genres": [
+        "pop",
+        "ballad"
+      ],
+      "language": "en",
+      "era": "1990s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-028",
+      "title": "I Will Always Love You",
+      "artist": "Whitney Houston",
+      "album": null,
+      "genres": [
+        "pop",
+        "ballad"
+      ],
+      "language": "en",
+      "era": "1990s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-029",
+      "title": "Seven Nation Army",
+      "artist": "The White Stripes",
+      "album": null,
+      "genres": [
+        "garage-rock"
+      ],
+      "language": "en",
+      "era": "2000s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-030",
+      "title": "Smells Like Teen Spirit",
+      "artist": "Nirvana",
+      "album": null,
+      "genres": [
+        "grunge",
+        "alt-rock"
+      ],
+      "language": "en",
+      "era": "1990s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-031",
+      "title": "Karma Police",
+      "artist": "Radiohead",
+      "album": null,
+      "genres": [
+        "alt-rock"
+      ],
+      "language": "en",
+      "era": "1990s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-032",
+      "title": "Bohemian Rhapsody",
+      "artist": "Queen",
+      "album": null,
+      "genres": [
+        "progressive-rock"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-033",
+      "title": "Float On",
+      "artist": "Modest Mouse",
+      "album": null,
+      "genres": [
+        "indie-rock"
+      ],
+      "language": "en",
+      "era": "2000s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-034",
+      "title": "1979",
+      "artist": "Smashing Pumpkins",
+      "album": null,
+      "genres": [
+        "alt-rock"
+      ],
+      "language": "en",
+      "era": "1990s",
+      "mood": "nostalgic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-035",
+      "title": "Sympathy for the Devil",
+      "artist": "The Rolling Stones",
+      "album": null,
+      "genres": [
+        "classic-rock"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-036",
+      "title": "Stairway to Heaven",
+      "artist": "Led Zeppelin",
+      "album": null,
+      "genres": [
+        "classic-rock",
+        "hard-rock"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "nostalgic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-037",
+      "title": "Crazy",
+      "artist": "Gnarls Barkley",
+      "album": null,
+      "genres": [
+        "neo-soul",
+        "alt-pop"
+      ],
+      "language": "en",
+      "era": "2000s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-038",
+      "title": "Hey Ya",
+      "artist": "OutKast",
+      "album": null,
+      "genres": [
+        "hip-hop",
+        "funk"
+      ],
+      "language": "en",
+      "era": "2000s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-039",
+      "title": "Wonderwall",
+      "artist": "Oasis",
+      "album": null,
+      "genres": [
+        "britpop",
+        "alt-rock"
+      ],
+      "language": "en",
+      "era": "1990s",
+      "mood": "nostalgic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-040",
+      "title": "The Sound of Silence",
+      "artist": "Simon and Garfunkel",
+      "album": null,
+      "genres": [
+        "folk-rock"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-041",
+      "title": "No Surprises",
+      "artist": "Radiohead",
+      "album": null,
+      "genres": [
+        "alt-rock"
+      ],
+      "language": "en",
+      "era": "1990s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-042",
+      "title": "Take On Me",
+      "artist": "a-ha",
+      "album": null,
+      "genres": [
+        "synth-pop",
+        "new-wave"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-043",
+      "title": "Hey Ya",
+      "artist": "OutKast",
+      "album": null,
+      "genres": [
+        "hip-hop",
+        "funk"
+      ],
+      "language": "en",
+      "era": "2000s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-044",
+      "title": "The Sound of Silence",
+      "artist": "Simon and Garfunkel",
+      "album": null,
+      "genres": [
+        "folk-rock"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-045",
+      "title": "No Surprises",
+      "artist": "Radiohead",
+      "album": null,
+      "genres": [
+        "alt-rock"
+      ],
+      "language": "en",
+      "era": "1990s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-046",
+      "title": "Float On",
+      "artist": "Modest Mouse",
+      "album": null,
+      "genres": [
+        "indie-rock"
+      ],
+      "language": "en",
+      "era": "2000s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-047",
+      "title": "Crazy",
+      "artist": "Gnarls Barkley",
+      "album": null,
+      "genres": [
+        "neo-soul",
+        "alt-pop"
+      ],
+      "language": "en",
+      "era": "2000s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-048",
+      "title": "Blue Monday",
+      "artist": "New Order",
+      "album": null,
+      "genres": [
+        "synth-pop",
+        "new-wave"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-049",
+      "title": "1979",
+      "artist": "Smashing Pumpkins",
+      "album": null,
+      "genres": [
+        "alt-rock"
+      ],
+      "language": "en",
+      "era": "1990s",
+      "mood": "nostalgic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-050",
+      "title": "Blue Monday",
+      "artist": "New Order",
+      "album": null,
+      "genres": [
+        "synth-pop",
+        "new-wave"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-051",
+      "title": "Suzanne",
+      "artist": "Leonard Cohen",
+      "album": null,
+      "genres": [
+        "folk",
+        "singer-songwriter"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-052",
+      "title": "The Sound of Silence",
+      "artist": "Simon and Garfunkel",
+      "album": null,
+      "genres": [
+        "folk-rock"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-053",
+      "title": "Seven Nation Army",
+      "artist": "The White Stripes",
+      "album": null,
+      "genres": [
+        "garage-rock"
+      ],
+      "language": "en",
+      "era": "2000s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-054",
+      "title": "Imagine",
+      "artist": "John Lennon",
+      "album": null,
+      "genres": [
+        "folk-pop"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "nostalgic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-055",
+      "title": "Take On Me",
+      "artist": "a-ha",
+      "album": null,
+      "genres": [
+        "synth-pop",
+        "new-wave"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-056",
+      "title": "Heroes",
+      "artist": "David Bowie",
+      "album": null,
+      "genres": [
+        "art-rock"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "energetic",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-057",
+      "title": "The Sound of Silence",
+      "artist": "Simon and Garfunkel",
+      "album": null,
+      "genres": [
+        "folk-rock"
+      ],
+      "language": "en",
+      "era": "1960s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-058",
+      "title": "Pictures of You",
+      "artist": "The Cure",
+      "album": null,
+      "genres": [
+        "post-punk",
+        "new-wave"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "melancholy",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-era-059",
+      "title": "Dreams",
+      "artist": "Fleetwood Mac",
+      "album": null,
+      "genres": [
+        "soft-rock"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "chill",
+      "scope_origin": "era"
+    },
+    {
+      "spotify_track_id": "mock-mood-000",
+      "title": "Levitating",
+      "artist": "Dua Lipa",
+      "album": null,
+      "genres": [
+        "pop",
+        "disco-pop"
+      ],
+      "language": "en",
+      "era": "2020s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-001",
+      "title": "Skinny Dippin'",
+      "artist": "Sabrina Carpenter",
+      "album": null,
+      "genres": [
+        "pop"
+      ],
+      "language": "en",
+      "era": "2020s",
+      "mood": "chill",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-002",
+      "title": "Saman",
+      "artist": "Olafur Arnalds",
+      "album": null,
+      "genres": [
+        "neo-classical"
+      ],
+      "language": "instrumental",
+      "era": "2010s",
+      "mood": "focus",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-003",
+      "title": "Mr. Blue Sky",
+      "artist": "Electric Light Orchestra",
+      "album": null,
+      "genres": [
+        "rock",
+        "pop-rock"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-004",
+      "title": "Lovely Day",
+      "artist": "Bill Withers",
+      "album": null,
+      "genres": [
+        "soul",
+        "r&b"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "chill",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-005",
+      "title": "Strobe",
+      "artist": "Deadmau5",
+      "album": null,
+      "genres": [
+        "progressive-house"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "focus",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-006",
+      "title": "Strobe",
+      "artist": "Deadmau5",
+      "album": null,
+      "genres": [
+        "progressive-house"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "focus",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-007",
+      "title": "Lean on Me",
+      "artist": "Bill Withers",
+      "album": null,
+      "genres": [
+        "soul"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "chill",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-008",
+      "title": "Don't Stop Me Now",
+      "artist": "Queen",
+      "album": null,
+      "genres": [
+        "rock"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-009",
+      "title": "Good as Hell",
+      "artist": "Lizzo",
+      "album": null,
+      "genres": [
+        "pop",
+        "r&b"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-010",
+      "title": "Happy",
+      "artist": "Pharrell Williams",
+      "album": null,
+      "genres": [
+        "neo-soul",
+        "pop"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-011",
+      "title": "Dancing Queen",
+      "artist": "ABBA",
+      "album": null,
+      "genres": [
+        "disco",
+        "pop"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-012",
+      "title": "Strobe",
+      "artist": "Deadmau5",
+      "album": null,
+      "genres": [
+        "progressive-house"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "focus",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-013",
+      "title": "Skinny Dippin'",
+      "artist": "Sabrina Carpenter",
+      "album": null,
+      "genres": [
+        "pop"
+      ],
+      "language": "en",
+      "era": "2020s",
+      "mood": "chill",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-014",
+      "title": "Levitating",
+      "artist": "Dua Lipa",
+      "album": null,
+      "genres": [
+        "pop",
+        "disco-pop"
+      ],
+      "language": "en",
+      "era": "2020s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-015",
+      "title": "Dancing Queen",
+      "artist": "ABBA",
+      "album": null,
+      "genres": [
+        "disco",
+        "pop"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-016",
+      "title": "Walking on Sunshine",
+      "artist": "Katrina and the Waves",
+      "album": null,
+      "genres": [
+        "pop",
+        "new-wave"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-017",
+      "title": "Good as Hell",
+      "artist": "Lizzo",
+      "album": null,
+      "genres": [
+        "pop",
+        "r&b"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-018",
+      "title": "September",
+      "artist": "Earth, Wind and Fire",
+      "album": null,
+      "genres": [
+        "funk",
+        "disco"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-019",
+      "title": "Music for Airports",
+      "artist": "Brian Eno",
+      "album": null,
+      "genres": [
+        "ambient"
+      ],
+      "language": "instrumental",
+      "era": "1970s",
+      "mood": "focus",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-020",
+      "title": "Born to Run",
+      "artist": "Bruce Springsteen",
+      "album": null,
+      "genres": [
+        "rock"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "nostalgic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-021",
+      "title": "Fast Car",
+      "artist": "Tracy Chapman",
+      "album": null,
+      "genres": [
+        "folk-rock"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "nostalgic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-022",
+      "title": "Can't Stop the Feeling",
+      "artist": "Justin Timberlake",
+      "album": null,
+      "genres": [
+        "pop"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-023",
+      "title": "Fast Car",
+      "artist": "Tracy Chapman",
+      "album": null,
+      "genres": [
+        "folk-rock"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "nostalgic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-024",
+      "title": "Skinny Dippin'",
+      "artist": "Sabrina Carpenter",
+      "album": null,
+      "genres": [
+        "pop"
+      ],
+      "language": "en",
+      "era": "2020s",
+      "mood": "chill",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-025",
+      "title": "Time After Time",
+      "artist": "Cyndi Lauper",
+      "album": null,
+      "genres": [
+        "pop"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "nostalgic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-026",
+      "title": "Weightless",
+      "artist": "Marconi Union",
+      "album": null,
+      "genres": [
+        "ambient",
+        "electronic"
+      ],
+      "language": "instrumental",
+      "era": "2010s",
+      "mood": "focus",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-027",
+      "title": "Walking on Sunshine",
+      "artist": "Katrina and the Waves",
+      "album": null,
+      "genres": [
+        "pop",
+        "new-wave"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-028",
+      "title": "Levitating",
+      "artist": "Dua Lipa",
+      "album": null,
+      "genres": [
+        "pop",
+        "disco-pop"
+      ],
+      "language": "en",
+      "era": "2020s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-029",
+      "title": "Walking on Sunshine",
+      "artist": "Katrina and the Waves",
+      "album": null,
+      "genres": [
+        "pop",
+        "new-wave"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-030",
+      "title": "Dancing Queen",
+      "artist": "ABBA",
+      "album": null,
+      "genres": [
+        "disco",
+        "pop"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-031",
+      "title": "September",
+      "artist": "Earth, Wind and Fire",
+      "album": null,
+      "genres": [
+        "funk",
+        "disco"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-032",
+      "title": "Walking on Sunshine",
+      "artist": "Katrina and the Waves",
+      "album": null,
+      "genres": [
+        "pop",
+        "new-wave"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-033",
+      "title": "Skinny Dippin'",
+      "artist": "Sabrina Carpenter",
+      "album": null,
+      "genres": [
+        "pop"
+      ],
+      "language": "en",
+      "era": "2020s",
+      "mood": "chill",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-034",
+      "title": "Mr. Blue Sky",
+      "artist": "Electric Light Orchestra",
+      "album": null,
+      "genres": [
+        "rock",
+        "pop-rock"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-035",
+      "title": "Lovely Day",
+      "artist": "Bill Withers",
+      "album": null,
+      "genres": [
+        "soul",
+        "r&b"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "chill",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-036",
+      "title": "Uptown Funk",
+      "artist": "Mark Ronson",
+      "album": null,
+      "genres": [
+        "funk",
+        "pop"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-037",
+      "title": "Happy",
+      "artist": "Pharrell Williams",
+      "album": null,
+      "genres": [
+        "neo-soul",
+        "pop"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-038",
+      "title": "September",
+      "artist": "Earth, Wind and Fire",
+      "album": null,
+      "genres": [
+        "funk",
+        "disco"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-039",
+      "title": "Fast Car",
+      "artist": "Tracy Chapman",
+      "album": null,
+      "genres": [
+        "folk-rock"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "nostalgic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-040",
+      "title": "Vespers",
+      "artist": "Olafur Arnalds",
+      "album": null,
+      "genres": [
+        "neo-classical"
+      ],
+      "language": "instrumental",
+      "era": "2010s",
+      "mood": "focus",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-041",
+      "title": "Saman",
+      "artist": "Olafur Arnalds",
+      "album": null,
+      "genres": [
+        "neo-classical"
+      ],
+      "language": "instrumental",
+      "era": "2010s",
+      "mood": "focus",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-042",
+      "title": "The Boys of Summer",
+      "artist": "Don Henley",
+      "album": null,
+      "genres": [
+        "soft-rock"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "nostalgic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-043",
+      "title": "Tennessee Whiskey",
+      "artist": "Chris Stapleton",
+      "album": null,
+      "genres": [
+        "country-soul"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "chill",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-044",
+      "title": "Re: Stacks",
+      "artist": "Bon Iver",
+      "album": null,
+      "genres": [
+        "indie-folk"
+      ],
+      "language": "en",
+      "era": "2000s",
+      "mood": "focus",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-045",
+      "title": "Time After Time",
+      "artist": "Cyndi Lauper",
+      "album": null,
+      "genres": [
+        "pop"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "nostalgic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-046",
+      "title": "Weightless",
+      "artist": "Marconi Union",
+      "album": null,
+      "genres": [
+        "ambient",
+        "electronic"
+      ],
+      "language": "instrumental",
+      "era": "2010s",
+      "mood": "focus",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-047",
+      "title": "Re: Stacks",
+      "artist": "Bon Iver",
+      "album": null,
+      "genres": [
+        "indie-folk"
+      ],
+      "language": "en",
+      "era": "2000s",
+      "mood": "focus",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-048",
+      "title": "September",
+      "artist": "Earth, Wind and Fire",
+      "album": null,
+      "genres": [
+        "funk",
+        "disco"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-049",
+      "title": "Don't Stop Me Now",
+      "artist": "Queen",
+      "album": null,
+      "genres": [
+        "rock"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-050",
+      "title": "Walking on Sunshine",
+      "artist": "Katrina and the Waves",
+      "album": null,
+      "genres": [
+        "pop",
+        "new-wave"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-051",
+      "title": "Music for Airports",
+      "artist": "Brian Eno",
+      "album": null,
+      "genres": [
+        "ambient"
+      ],
+      "language": "instrumental",
+      "era": "1970s",
+      "mood": "focus",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-052",
+      "title": "Can't Stop the Feeling",
+      "artist": "Justin Timberlake",
+      "album": null,
+      "genres": [
+        "pop"
+      ],
+      "language": "en",
+      "era": "2010s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-053",
+      "title": "Don't Stop Me Now",
+      "artist": "Queen",
+      "album": null,
+      "genres": [
+        "rock"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "energetic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-054",
+      "title": "The Boys of Summer",
+      "artist": "Don Henley",
+      "album": null,
+      "genres": [
+        "soft-rock"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "nostalgic",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-055",
+      "title": "Re: Stacks",
+      "artist": "Bon Iver",
+      "album": null,
+      "genres": [
+        "indie-folk"
+      ],
+      "language": "en",
+      "era": "2000s",
+      "mood": "focus",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-056",
+      "title": "Re: Stacks",
+      "artist": "Bon Iver",
+      "album": null,
+      "genres": [
+        "indie-folk"
+      ],
+      "language": "en",
+      "era": "2000s",
+      "mood": "focus",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-057",
+      "title": "Weightless",
+      "artist": "Marconi Union",
+      "album": null,
+      "genres": [
+        "ambient",
+        "electronic"
+      ],
+      "language": "instrumental",
+      "era": "2010s",
+      "mood": "focus",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-058",
+      "title": "Lovely Day",
+      "artist": "Bill Withers",
+      "album": null,
+      "genres": [
+        "soul",
+        "r&b"
+      ],
+      "language": "en",
+      "era": "1970s",
+      "mood": "chill",
+      "scope_origin": "mood"
+    },
+    {
+      "spotify_track_id": "mock-mood-059",
+      "title": "Time After Time",
+      "artist": "Cyndi Lauper",
+      "album": null,
+      "genres": [
+        "pop"
+      ],
+      "language": "en",
+      "era": "1980s",
+      "mood": "nostalgic",
+      "scope_origin": "mood"
+    }
+  ]
+}

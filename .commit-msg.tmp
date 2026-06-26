@@ -1,0 +1,46 @@
+R2: Reset engine - real Groq ranking + hallucination guard
+
+What this adds:
+- backend/scripts/generate_mock_candidates.py: produces a 240-track pool
+  (60 per scope: genre, language, era, mood) hand-curated to be plausible
+  bridges out of each persona's stuck axis. Every track has a stable
+  mock-<scope>-<idx> ID so the validation guard has an unambiguous source
+  of truth.
+- backend/mock_data/mock_candidates.json: the generated fixture (~74 KB).
+- backend/app/llm_client.py: real rank_and_explain() implementation.
+  Sends scope + free-text intent + compacted candidate list to Groq
+  (llama-3.3-70b-versatile) and asks for {spotify_track_id, score, why}
+  per pick. System prompt explicitly forbids inventing IDs.
+- backend/app/reset_engine.py: end-to-end orchestrator.
+  build_search_queries (real-mode query builder for R4),
+  _filter_candidates_by_scope, _dedupe_candidates,
+  _validate_picks (drops hallucinated IDs - the pitfall-1 guard from
+  slide 9), generate_reset_playlist (filter, Groq, validate, sort, stamp
+  order_index, log).
+- backend/app/spotify_client.py: search_candidates now unwraps the
+  {candidates: [...]} envelope and filters BEFORE trimming.
+- backend/app/routes/reset.py: real POST /reset/sessions and
+  GET /reset/sessions/{id}. Persists ResetSession + 20 ResetTrack rows;
+  resolves 404 if user not seeded; 422 on bad scope; 502 on Groq failure
+  or all-hallucinated response; 501 on /decide (which lands in R5).
+- backend/tests/test_reset_engine.py: 22 new unit tests covering
+  query builder, scope filter, dedupe, validation guard (esp. dropping
+  hallucinated IDs end-to-end), score-sorted order, fixture shape, and
+  full-fixture run with mocked Groq. Total backend tests: 57 passing.
+
+Live verification (real Groq calls, MOCK_MODE=true):
+  Karthik (language scope, "expand beyond Telugu"):
+    20 tracks, all from mock-language-* pool, all with non-empty why,
+    Groq round-trip 5 sec, sample explanation:
+    "Bailando's latin-pop rhythm will get you moving, expanding your
+     language scope to Spanish".
+  Aanya (genre scope, "jazzy or neo-soul to break dream-pop"):
+    20 tracks, all from mock-genre-* pool, all with non-empty why,
+    Groq round-trip 28 sec, sample explanation:
+    "Neo-soul genre to break the dream-pop spell".
+  GET /reset/sessions/{id} returns the persisted session intact.
+
+No hallucinations dropped this run (LLM stayed in the pool); the guard
+is in place and unit-tested with synthetic hallucinated IDs.
+
+Refs: 02-mvp/doc/architecture.md sections 6, 12 (Build R2).
