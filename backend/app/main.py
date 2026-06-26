@@ -16,7 +16,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.db import init_db
-from app.routes import auth, jobs, nudges, reset
+from app.routes import auth, dashboard, jobs, nudges, reset
 
 
 logging.basicConfig(
@@ -54,6 +54,7 @@ app.include_router(auth.router, prefix="/auth", tags=["auth"])
 app.include_router(jobs.router, prefix="/jobs", tags=["jobs"])
 app.include_router(nudges.router, prefix="/nudges", tags=["nudges"])
 app.include_router(reset.router, prefix="/reset", tags=["reset"])
+app.include_router(dashboard.router, tags=["dashboard"])           # /users and /scores/history at the root
 
 
 @app.on_event("startup")

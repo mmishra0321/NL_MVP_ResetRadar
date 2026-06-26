@@ -29,6 +29,7 @@ from app.detection import process_user_weeks, should_trigger_nudge
 from app.models import (
     Nudge,
     ResetSession,
+    ResetTrack,
     StuckScore,
     User,
     WeeklySnapshot,
@@ -88,15 +89,29 @@ def _ensure_user(db, fixture: dict[str, Any], user_id: str) -> User:
 
 
 def _wipe_user_history(db, user_id: str) -> None:
-    """Idempotency: clear existing snapshots/scores/nudges for a demo user.
+    """Idempotency: clear ALL prior demo data for a user in mock mode.
 
-    Reset sessions are preserved unless they're for archived weeks, so we
-    don't accidentally destroy an active demo session that R2/R3 will
-    have created on top of this data.
+    Wipes snapshots, scores, nudges, AND reset sessions (incl. their
+    tracks). This is mock-mode demo behaviour: every detection run is
+    designed to be a fresh start so a presenter can re-run the loop
+    repeatedly without state from prior runs blocking the trigger
+    (e.g. a half-finished reset session marking `has_active_session=True`
+    and silently suppressing nudges).
+
+    Real-mode (R4+) will replace this with append-only weekly snapshots
+    and will NOT wipe reset sessions, which represent real user history.
     """
     db.query(WeeklySnapshot).filter(WeeklySnapshot.user_id == user_id).delete()
     db.query(StuckScore).filter(StuckScore.user_id == user_id).delete()
     db.query(Nudge).filter(Nudge.user_id == user_id).delete()
+    user_session_ids = [
+        s.id for s in db.query(ResetSession).filter(ResetSession.user_id == user_id).all()
+    ]
+    if user_session_ids:
+        db.query(ResetTrack).filter(
+            ResetTrack.reset_session_id.in_(user_session_ids)
+        ).delete(synchronize_session=False)
+        db.query(ResetSession).filter(ResetSession.user_id == user_id).delete()
 
 
 def _has_active_session(db, user_id: str) -> bool:
