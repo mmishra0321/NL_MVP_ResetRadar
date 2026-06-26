@@ -23,6 +23,9 @@
 | **R5** Spotify write endpoints | Real playlist create / follow / save / delete | ✅ |
 | **R6** GitHub Action + polish | Lock weekly cron workflow, polish UI, lock demo script | ✅ |
 | **R7-local** Capture deck screenshots | 3 frames at 1920×1080 in `assets/mvp-screenshots/`; cloud deploy deferred | ✅ |
+| **R8** Real-mode toggle + observability | Mode switcher card (Demo ↔ Connect Spotify), `/jobs/runs/*` API, `LastRunCard`, `/runs` page with 4-step trace per user, hybrid mode (mock + OAuth user folded in same run) | ✅ |
+| **R9** Spotify-home UI reframe | OAuth UI removed (backend routes retained, unused). Two-persona user-journey deck slide for Aanya (genre stuck) + Karthik (language stuck). | ✅ |
+| **R10** Spotify web-player home as the entry point | `/` is now `HomePage` rendering a **desktop Spotify-web layout** (left sidebar, top bar, "Recently played" grid with album-art-style covers) with the **Reset Radar nudge embedded as a feed card** between greeting and tiles. Chart dashboard moved to `/engine`. Deck slide 9 gains an **"honest gap"** callout (sandbox is UX-level, not backend-enforced; v2 partnership). | ✅ |
 
 > **R3 is the demo-presentable stopping point.** Everything from R0
 > to R3 runs against synthetic fixtures with **zero Spotify API calls**.
@@ -305,6 +308,115 @@ check.
   arrives naturally on the next weekly cron run after a Keep decision
   in real mode; the frontend already labels the current value as a
   projection.
+
+---
+
+## R8 -- Real-mode toggle + GH Action observability + run trace
+
+R8 is the **observability + onboarding** layer. It doesn't change the
+detection math or the reset flow — it makes the existing engine
+*legible* to a reviewer who's never read the code. Three reviewer
+questions get answered on screen:
+
+| Reviewer question | R8 answer on screen | Backend source |
+|---|---|---|
+| *"How do I switch from demo personas to my own Spotify data?"* | **Mode Switcher card** at top of Dashboard. `Active data: Demo personas` shows the current state with a `Connect Spotify` CTA. After OAuth, the same card flips to `Live + Demo` (hybrid) or `Live Spotify` (real-only deploy). | `_run_real_mode(allow_empty=True)` in `routes/jobs.py` folds OAuth-authenticated users into the mock-mode pass when `MOCK_MODE=true` |
+| *"When did the weekly GitHub Action last fire, and what did it do?"* | **Last Detection Run card** on Dashboard. Shows `Xs/m/h/d ago`, exact timestamp, users processed, snapshots, scores, nudges fired, duration, mode badge (`MOCK` / `HYBRID` / `REAL`), and a link to `/runs`. | `GET /jobs/runs/last` returns the most recent `JobRun` row |
+| *"What did the cron decide for each user, step by step?"* | **`/runs` page** with one row per detection call, expandable to a per-user 4-step trace: **1 LOAD** (snapshot count) → **2 FORMULAS** (overall + streak + suggested dimension) → **3 TRIGGER** (`pass / hold` + human-readable reason) → **4 NUDGE?** (`fired` + `nudge_id`). | `GET /jobs/runs` list view + `GET /jobs/runs/{id}` full trace |
+
+### Hybrid mode (the real-mode-toggle implementation)
+
+`MOCK_MODE` stays a backend env flag — flipping it requires restarting
+the server, which is the wrong UX. R8's contribution: when
+`MOCK_MODE=true` and any user row carries an `access_token`, the
+detection job **also runs a real-mode pass for those users** and
+merges the results into the same `JobRun`. Result:
+
+- Logged-out reviewer: sees demo personas only (current behaviour).
+- Reviewer clicks "Connect Spotify" → OAuth → returns to Dashboard:
+  the **next** detection run includes them in a `hybrid` run, with
+  their real chart available via the user picker.
+- The deck screenshots, the demo script, and the GH Action all keep
+  working unchanged — hybrid is purely additive.
+
+### What R8 does NOT do
+
+- It does NOT change the detection math (`detection.py` is untouched).
+- It does NOT change the reset flow (`reset_engine.py` is untouched).
+- It does NOT add a public surface inside the Spotify app. That
+  remains slide 10 bet 4 (Spotify partnership for a native surface).
+  Reset Radar is still a standalone companion web app today.
+- It does NOT measure `after_stuck_score` from real listening — the
+  projection caveat from R6 stands.
+
+### Testing
+
+13 new tests in `backend/tests/test_jobs_runs.py` cover JobRun
+persistence (mock + dry_run skip), all 3 query endpoints (last / list /
+by-id / 404), and hybrid mode regressions (no-OAuth stays mock, OAuth
+present folds in, OAuth fetch error stays non-fatal). Full backend
+suite stays green: **170 / 170** after R8 (was 157 / 157 at R7).
+
+---
+
+## R9 + R10 -- Spotify-home UI reframe + honest-gap callout
+
+R9 and R10 collapse together because they share a single insight:
+**Reset Radar's discoverability claim is only credible if the demo
+itself shows the nudge inside the Spotify surface, not in a separate
+companion app**. R8 had built a polished diagnostic dashboard with
+charts, mode switcher, last-run card, and `/runs` history — all
+useful for reviewers, but all wrong as the *primary* surface a user
+would meet.
+
+### What changed
+
+| Area | Before (R8) | After (R10) |
+|---|---|---|
+| Root route `/` | Diagnostic dashboard: stuck-score chart, per-dimension grid, mode switcher, `LastRunCard`, login CTA | `HomePage` rendering a **desktop Spotify-web layout**: left sidebar with Spotify brand + nav (Home/Search/Your Library) + filler playlists, top bar with nav arrows + avatar pill, "Good evening" greeting, and the **Reset Radar nudge embedded as a feed card** between the greeting and "Recently played" |
+| "Recently played" tiles | (didn't exist) | 6 gradient album-art-style covers per persona — Bollywood Hits / Romantic Bollywood / Hindi Pop / Indian Indie / Bollywood Sing-Along / Hindi Hits for Aanya; Telugu Film Hits / Telugu Romance / Carnatic Classical (ॐ) / Latest Telugu / Evergreen Telugu / Devotional South India for Karthik. Each cover is a Spotify-style "PLAYLIST + bold letter symbol + colour gradient" tile. |
+| Demo-only persona toggle | `<select>` inside the dashboard | `"Demo only · Viewing as: Aanya | Karthik"` pill row **above** the Spotify frame, with the disclaimer *"In production this row doesn't exist - you are whoever is signed into Spotify."* |
+| OAuth UI | "Connect Spotify" CTA + post-auth flip in Mode Switcher card | **Removed entirely.** Backend OAuth routes still exist (and the API client still tracks `me`-equivalent state through the mode switcher in `/engine`) but the home page no longer surfaces them. R10's stance: don't sell capability we haven't shipped. |
+| Chart dashboard | `/` (the primary surface) | `/engine` (linked via a faint "Engine diagnostics →" footer at the bottom of the home page). All R8 work — `LastRunCard`, mode switcher, `/runs` page, per-user step trace — remains intact at `/engine`. |
+| Deck slide 9 (frames) | 3 screenshots + mock-mode footer | 3 screenshots + **"Honest gap" callout** between the screenshots and the footer: *"the sandbox is a UX-level guarantee, not a backend one … no public API allows separating the underlying signal Spotify's recommender receives … backend-enforced isolation is a v2 partnership conversation with Spotify directly (slide 11 bet 4)."* Amber-striped panel, full slide width, sits on the same slide as the demo screenshots so it reads as principled scoping, not appendix-burying. |
+| Deck slide 8 | (didn't exist) | **New 5-step user-journey slide** — Aanya (English-indie / genre-stuck) and Karthik (Telugu+Hindi / language-stuck) side-by-side, six numbered beats each (DISCOVERY → REACTION/WHY-IT-MATTERS → SCOPE → RESET PLAYLIST → TRIAL LISTEN / KEEP-OR-REVERT). Same engine, different decision per user. |
+| Deck length | 10 slides | **11 slides** (slide 8 user-journeys is new; slide 9 frames, slide 10 pitfalls, slide 11 future scope renumbered). |
+
+### What R10 does NOT do
+
+- It does NOT remove the diagnostic dashboard — `/engine` still ships
+  the full R8 observability suite (mode switcher, last-run card,
+  `/runs` history with per-user step traces). The route just isn't
+  the front door anymore.
+- It does NOT add real Spotify deep-linking from the home page
+  tiles — the "Recently played" covers are decorative for the
+  discoverability claim, not clickable into Spotify.
+- It does NOT make the sandbox backend-enforced. That's the literal
+  content of the honest-gap callout: the gap is named, not closed.
+- It does NOT change the detection math, the reset engine, the
+  candidate generator, the LLM ranking, or the Spotify write
+  endpoints. Same backend, repositioned front door.
+
+### Frontend file map (post-R10)
+
+| File | Role |
+|---|---|
+| `frontend/src/pages/HomePage.jsx` | The new `/` — Spotify-home layout with the embedded nudge card. Loads the latest nudge for the active persona; the persona toggle is the **"Demo only · Viewing as"** row above the Spotify frame. |
+| `frontend/src/pages/Dashboard.jsx` | Now mounted at `/engine`. Header renamed to **"Engine diagnostics"** with a link back to home. All R8 observability (mode switcher card, `LastRunCard`, stuck-score chart, per-dimension grid) lives here. |
+| `frontend/src/pages/RunsPage.jsx` | Unchanged from R8. Mounted at `/runs`. Per-user 4-step trace (LOAD → FORMULAS → TRIGGER → NUDGE?) for each detection call. |
+| `frontend/src/components/LastRunCard.jsx` | Unchanged from R8. Used inside `Dashboard.jsx` (now `/engine`). |
+| `frontend/src/App.jsx` | Nav links updated to **Home / Reset / Engine / Runs**. `/` routes to `HomePage`; `/engine` routes to `Dashboard`. |
+
+### Testing (R9 + R10)
+
+No new backend tests — the changes are UI-only and the backend
+contract is unchanged from R8. The R8 backend suite (**170 / 170
+green**) covers everything the home page consumes (`getLatestNudge`,
+`listUsers`, `respondToNudge`). The home page itself was verified via
+Playwright screenshots for both demo personas, captured at 1440×950
+and copied into the deck assets as
+`assets/mvp-screenshots/home-aanya-genre-nudge.png` and
+`home-karthik-language-nudge.png`.
 
 ---
 

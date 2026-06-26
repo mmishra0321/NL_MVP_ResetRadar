@@ -23,10 +23,12 @@
  * user id (see useDemoUser).
  */
 import { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { api } from '../api/client.js';
 import { colors } from '../theme.js';
 import StuckScoreCard from '../components/StuckScoreCard.jsx';
 import NudgeCard from '../components/NudgeCard.jsx';
+import LastRunCard from '../components/LastRunCard.jsx';
 import useDemoUser from '../hooks/useDemoUser.js';
 
 
@@ -38,10 +40,12 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [running, setRunning] = useState(false);
+  const [runKey, setRunKey] = useState(0);                            // bumps LastRunCard refresh
 
-  // R6: mode awareness (mock vs real) + auth state for the login CTA.
+  // R10: mock-mode-only now; OAuth UI was removed per user direction.
+  // Backend MOCK_MODE flag is still surfaced for the badge, but no
+  // login / Connect-Spotify path is exposed in the UI.
   const [meta, setMeta] = useState({ mockMode: true });
-  const [me, setMe] = useState({ authenticated: false });
 
   const refresh = useCallback(async (uid) => {
     if (!uid) return;
@@ -64,13 +68,12 @@ export default function Dashboard() {
     }
   }, []);
 
-  // Initial bootstrap - users + mode + auth, in parallel.
+  // Initial bootstrap - users + backend health.
   useEffect(() => {
     Promise.all([
       api.listUsers().catch(() => []),
       api.health().catch(() => null),
-      api.whoami().catch(() => ({ authenticated: false })),
-    ]).then(([users, health, whoami]) => {
+    ]).then(([users, health]) => {
       setUsers(Array.isArray(users) ? users : []);
       if (health && typeof health === 'object') {
         setMeta({
@@ -79,7 +82,6 @@ export default function Dashboard() {
           fastModel: health.fast_model,
         });
       }
-      setMe(whoami || { authenticated: false });
     });
   }, []);
 
@@ -94,19 +96,12 @@ export default function Dashboard() {
       const updated = await api.listUsers().catch(() => []);
       setUsers(Array.isArray(updated) ? updated : []);
       await refresh(userId);
+      setRunKey((k) => k + 1);                                        // refresh LastRunCard
     } catch (e) {
       setError(`Run detection failed: ${e.message || e}`);
     } finally {
       setRunning(false);
     }
-  };
-
-  const handleLogin = () => {
-    window.location.href = api.loginUrl();
-  };
-  const handleLogout = async () => {
-    try { await api.logout(); } catch { /* ignore */ }
-    setMe({ authenticated: false });
   };
 
   const latest = history.length ? history[history.length - 1] : null;
@@ -116,20 +111,15 @@ export default function Dashboard() {
     <main>
       <div style={topRow}>
         <div>
-          <h1 style={{ margin: 0, fontSize: '1.6rem' }}>Dashboard</h1>
+          <h1 style={{ margin: 0, fontSize: '1.6rem' }}>Engine diagnostics</h1>
           <div style={{ color: colors.textSecondary, fontSize: '0.95rem', marginTop: 4 }}>
-            Reset Radar reads four listening axes weekly. Below is the rolling
-            stuck score for the selected user.
+            Behind-the-scenes view: stuck-score timeline, per-dimension grid,
+            and the proactive-cron history. <Link to="/" style={{ color: colors.spotifyGreen }}>
+            {'\u2190'} Back to home</Link>
           </div>
         </div>
         <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
           <ModeBadge mock={meta.mockMode} />
-          <AuthControl
-            mockMode={meta.mockMode}
-            me={me}
-            onLogin={handleLogin}
-            onLogout={handleLogout}
-          />
           <label
             htmlFor="user-picker"
             style={{ fontSize: '0.82rem', color: colors.textMuted }}
@@ -156,9 +146,7 @@ export default function Dashboard() {
             className="btn-primary"
             onClick={handleRunDetection}
             disabled={running}
-            title={meta.mockMode
-              ? 'Wipes prior mock-mode state for the demo personas and recomputes 8 weeks of stuck scores.'
-              : 'Appends this week\u2019s Spotify snapshot to each authenticated user\u2019s history and recomputes stuck scores.'}
+            title="Wipes prior mock-mode state for the demo personas and recomputes 8 weeks of stuck scores."
           >
             {running ? 'Running\u2026' : 'Run detection now'}
           </button>
@@ -168,6 +156,8 @@ export default function Dashboard() {
       {error ? (
         <div style={errorStyle}>{error}</div>
       ) : null}
+
+      <LastRunCard refreshKey={runKey} />
 
       {nudge && nudge.status === 'pending' ? (
         <div style={{ margin: '1.5rem 0' }}>
@@ -231,34 +221,11 @@ function ModeBadge({ mock }) {
   );
 }
 
-function AuthControl({ mockMode, me, onLogin, onLogout }) {
-  // In mock mode, OAuth is intentionally bypassed; don't show login UI.
-  if (mockMode) return null;
-  if (me && me.authenticated) {
-    return (
-      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-        <span style={{ fontSize: '0.85rem', color: colors.textSecondary }}>
-          Signed in as <strong style={{ color: colors.textPrimary }}>
-            {me.display_name || me.spotify_user_id}
-          </strong>
-        </span>
-        <button type="button" className="btn-secondary" onClick={onLogout}>
-          Log out
-        </button>
-      </span>
-    );
-  }
-  return (
-    <button
-      type="button"
-      className="btn-primary"
-      onClick={onLogin}
-      title="Authorize Reset Radar to read your top tracks, recently played, and saved library."
-    >
-      Login with Spotify
-    </button>
-  );
-}
+// R10: AuthControl + ModeSwitcherCard removed entirely. The /engine
+// page no longer surfaces any "Connect Spotify" / "Login" CTA; the
+// demo is mock-only by design. The backend's /auth/* routes still
+// exist for future real-mode work but the frontend no longer calls
+// them. See HomePage.jsx for the primary user-facing entry point.
 
 function ChartSkeleton() {
   return (

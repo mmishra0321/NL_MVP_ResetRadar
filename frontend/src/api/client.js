@@ -29,22 +29,23 @@ export const api = {
   // === Meta ===
   health: () => request('/health'),
 
-  // === Auth (R4: PKCE OAuth) ===
-  whoami: () => request('/auth/me'),
-  loginUrl: () => `${BASE}/auth/login`,                               // fed straight to window.location.href
-  logout: () => request('/auth/logout', { method: 'POST' }),
+  // === Auth (R4 OAuth removed from UI in R10; backend routes still
+  //     exist but are not surfaced in the frontend at this time.) ===
 
   // === Dashboard (users + scores) ===
   listUsers: () => request('/users'),
   getScoreHistory: (userId) =>
     request(`/scores/history?user_id=${encodeURIComponent(userId)}`),
 
-  // === Jobs (manual demo trigger) ===
+  // === Jobs (manual demo trigger + R8 run history) ===
   runDetection: () =>
     request('/jobs/run-detection', {                                  // canonical name per architecture §6
       method: 'POST',
       body: JSON.stringify({}),
     }),
+  getLastJobRun: () => request('/jobs/runs/last'),
+  listJobRuns: (limit = 20) => request(`/jobs/runs?limit=${limit}`),
+  getJobRun: (runId) => request(`/jobs/runs/${encodeURIComponent(runId)}`),
 
   // === Nudges (latest + respond) ===
   getLatestNudge: (userId) =>

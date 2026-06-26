@@ -113,6 +113,32 @@ class ResetSession(Base):
     )
 
 
+class JobRun(Base):
+    """One row per `POST /jobs/run-detection` call (R8).
+
+    Captures the full structured summary the detection job already
+    returns, so the frontend can show a transparent timeline of
+    "what the cron did on Monday".
+
+    `details_json` mirrors the existing `summary["details"]` shape
+    exactly - per-user reason / stuck_streak_weeks / latest_overall /
+    latest_suggested_scope / nudge_id / (real-mode) any fetch errors.
+    """
+    __tablename__ = "job_runs"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True)
+    mode: Mapped[str] = mapped_column(String, nullable=False)            # "mock" | "real" | "hybrid"
+    dry_run: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    trigger_source: Mapped[str] = mapped_column(String, default="manual", nullable=False)  # "manual" | "cron"
+    users_processed: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    snapshots_created: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    scores_computed: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    nudges_fired: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    details_json: Mapped[list] = mapped_column(JSON, nullable=False)
+    started_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow, nullable=False)
+    completed_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow, nullable=False)
+
+
 class ResetTrack(Base):
     __tablename__ = "reset_tracks"
 
@@ -203,6 +229,7 @@ __all__ = [
     "WeeklySnapshot",
     "StuckScore",
     "Nudge",
+    "JobRun",
     "ResetSession",
     "ResetTrack",
     "StuckScoresPerDimension",

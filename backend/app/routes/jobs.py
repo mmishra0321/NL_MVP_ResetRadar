@@ -28,6 +28,7 @@ from app.config import settings
 from app.db import db_session
 from app.detection import process_user_weeks, should_trigger_nudge
 from app.models import (
+    JobRun,
     Nudge,
     ResetSession,
     ResetTrack,
@@ -183,19 +184,34 @@ def require_jobs_token(
     "/run-weekly-detection",
     dependencies=[Depends(require_jobs_token)],
 )
-def run_weekly_detection(dry_run: bool = False) -> dict[str, Any]:
+def run_weekly_detection(
+    dry_run: bool = False,
+    trigger_source: str = "manual",
+) -> dict[str, Any]:
     """Recompute stuck scores + fire nudges for every user.
 
     Mock mode: iterates the synthetic fixture's users, wipes any prior
-    demo state, replays 8 weeks of data through detection.
+    demo state, replays 8 weeks of data through detection. **R8 hybrid
+    extension:** if there are also OAuth-authenticated users in the DB,
+    each one is appended to the same run in real-mode (`fetch + persist
+    + score + maybe-nudge`), so the dashboard transitions cleanly when
+    a user logs in without flipping the backend's MOCK_MODE flag.
 
     Real mode (R4+): iterates users with valid Spotify access tokens,
     appends THIS week's snapshot, recomputes stuck scores across the
     user's accumulated history, fires a nudge if the trigger rule passes
     (respecting cooldown).
+
+    Every run is persisted as a `JobRun` row (R8) so the frontend can
+    render a transparent run history with per-user step traces.
     """
+    started_at = datetime.utcnow()
+
     if not settings.mock_mode:
-        return _run_real_mode(dry_run=dry_run)
+        summary = _run_real_mode(dry_run=dry_run)
+        _record_job_run(summary, mode="real",
+                        trigger_source=trigger_source, started_at=started_at)
+        return summary
 
     fixture = _load_synthetic_weeks()
     user_ids = sorted({
@@ -290,22 +306,95 @@ def run_weekly_detection(dry_run: bool = False) -> dict[str, Any]:
         if not dry_run:
             db.commit()
 
+    # === R8 hybrid extension =====================================
+    # If we're nominally in mock mode but real OAuth users exist, run
+    # the real-mode loop for them too and fold the results into the
+    # same summary. The dashboard sees one unified run.
+    hybrid_real_summary: dict[str, Any] | None = None
+    try:
+        hybrid_real_summary = _run_real_mode(dry_run=dry_run, allow_empty=True)
+    except Exception as exc:                                            # noqa: BLE001
+        log.warning("hybrid real-mode pass failed (non-fatal): %s", exc)
+        hybrid_real_summary = None
+
+    real_details = (hybrid_real_summary or {}).get("details", [])
+    real_users_seen = sum(1 for d in real_details if d.get("user_id"))
+    if hybrid_real_summary and real_users_seen > 0:
+        # Some OAuth users were considered (successful OR errored).
+        # Fold their traces into the summary so the run-detail view
+        # can show what happened for each of them.
+        summary["mode"] = "hybrid"
+        summary["users_processed"] += hybrid_real_summary["users_processed"]
+        summary["snapshots_created"] += hybrid_real_summary["snapshots_created"]
+        summary["scores_computed"] += hybrid_real_summary["scores_computed"]
+        summary["nudges_fired"] += hybrid_real_summary["nudges_fired"]
+        summary["details"].extend(real_details)
+        summary["real_users_in_hybrid"] = real_users_seen
+    else:
+        summary["mode"] = "mock"
+
     log.info(
-        "weekly detection complete | users=%d snapshots=%d scores=%d nudges=%d (dry=%s)",
+        "weekly detection complete | mode=%s users=%d snapshots=%d scores=%d nudges=%d (dry=%s)",
+        summary["mode"],
         summary["users_processed"],
         summary["snapshots_created"],
         summary["scores_computed"],
         summary["nudges_fired"],
         dry_run,
     )
+
+    _record_job_run(summary, mode=summary["mode"],
+                    trigger_source=trigger_source, started_at=started_at)
     return summary
+
+
+# ============================================================
+# JobRun persistence (R8)
+# ============================================================
+
+def _record_job_run(
+    summary: dict[str, Any],
+    *,
+    mode: str,
+    trigger_source: str,
+    started_at: datetime,
+) -> str | None:
+    """Persist one row capturing this detection call's full trace.
+
+    Returns the job_run id (UUID) on success, or None if dry_run was
+    set (we still want dry runs to come back successfully but we
+    don't want them polluting the run history).
+    """
+    if summary.get("dry_run"):
+        return None
+    job_id = str(uuid.uuid4())
+    try:
+        with db_session() as db:
+            db.add(JobRun(
+                id=job_id,
+                mode=mode,
+                dry_run=0,
+                trigger_source=trigger_source,
+                users_processed=int(summary.get("users_processed", 0)),
+                snapshots_created=int(summary.get("snapshots_created", 0)),
+                scores_computed=int(summary.get("scores_computed", 0)),
+                nudges_fired=int(summary.get("nudges_fired", 0)),
+                details_json=summary.get("details", []),
+                started_at=started_at,
+                completed_at=datetime.utcnow(),
+            ))
+            db.commit()
+    except Exception as exc:                                            # noqa: BLE001
+        log.warning("failed to persist JobRun (non-fatal): %s", exc)
+        return None
+    return job_id
 
 
 # ============================================================
 # Real-mode runner (R4)
 # ============================================================
 
-def _run_real_mode(*, dry_run: bool) -> dict[str, Any]:
+def _run_real_mode(*, dry_run: bool, allow_empty: bool = False) -> dict[str, Any]:
     """Per-user real-Spotify weekly snapshot + detection.
 
     For each user with a non-null `access_token`:
@@ -336,6 +425,11 @@ def _run_real_mode(*, dry_run: bool) -> dict[str, Any]:
     with db_session() as db:
         users = db.query(User).filter(User.access_token.isnot(None)).all()
         if not users:
+            if allow_empty:
+                # R8 hybrid call: silently return an empty summary so the
+                # caller can detect "no OAuth users to fold in" without
+                # the mock-mode summary getting a noisy `reason` row.
+                return summary
             summary["details"].append({
                 "reason": "no authenticated users; complete /auth/login first.",
             })
@@ -475,6 +569,113 @@ def _run_real_mode(*, dry_run: bool) -> dict[str, Any]:
 def _iso_week(dt: datetime) -> str:
     iso_year, iso_week, _ = dt.isocalendar()
     return f"{iso_year}-W{iso_week:02d}"
+
+
+# ============================================================
+# JobRun query endpoints (R8) - public, read-only
+# ============================================================
+
+
+def _utc_iso(dt: datetime | None) -> str | None:
+    """Serialise a naive-UTC datetime as a Z-suffixed ISO 8601 string.
+
+    SQLite + SQLAlchemy give us back naive datetimes from `_utcnow()`
+    (which is `datetime.utcnow()`). Browsers parse naive ISO strings
+    as local time, which manifests on the frontend as an N-hour skew
+    in 'X ago' labels. Appending the Z removes the ambiguity.
+    """
+    if dt is None:
+        return None
+    return dt.isoformat() + "Z"
+
+
+def _job_run_to_dict(jr: JobRun) -> dict[str, Any]:
+    return {
+        "id": jr.id,
+        "mode": jr.mode,
+        "dry_run": bool(jr.dry_run),
+        "trigger_source": jr.trigger_source,
+        "users_processed": jr.users_processed,
+        "snapshots_created": jr.snapshots_created,
+        "scores_computed": jr.scores_computed,
+        "nudges_fired": jr.nudges_fired,
+        "details": jr.details_json or [],
+        "started_at": _utc_iso(jr.started_at),
+        "completed_at": _utc_iso(jr.completed_at),
+        "duration_ms": (
+            int((jr.completed_at - jr.started_at).total_seconds() * 1000)
+            if jr.started_at and jr.completed_at
+            else None
+        ),
+    }
+
+
+@router.get("/runs")
+def list_job_runs(limit: int = 20) -> dict[str, Any]:
+    """List the most recent JobRun rows for the run-history view."""
+    limit = max(1, min(limit, 100))
+    with db_session() as db:
+        rows = (
+            db.query(JobRun)
+            .order_by(desc(JobRun.completed_at))
+            .limit(limit)
+            .all()
+        )
+        return {
+            "count": len(rows),
+            "runs": [
+                {
+                    # list view = summary only, no full details_json
+                    "id": r.id,
+                    "mode": r.mode,
+                    "trigger_source": r.trigger_source,
+                    "users_processed": r.users_processed,
+                    "snapshots_created": r.snapshots_created,
+                    "scores_computed": r.scores_computed,
+                    "nudges_fired": r.nudges_fired,
+                    "started_at": _utc_iso(r.started_at),
+                    "completed_at": _utc_iso(r.completed_at),
+                    "duration_ms": (
+                        int((r.completed_at - r.started_at).total_seconds() * 1000)
+                        if r.started_at and r.completed_at
+                        else None
+                    ),
+                }
+                for r in rows
+            ],
+        }
+
+
+@router.get("/runs/last")
+def last_job_run() -> dict[str, Any] | None:
+    """Compact summary of the most recent JobRun (Dashboard card)."""
+    with db_session() as db:
+        jr = (
+            db.query(JobRun)
+            .order_by(desc(JobRun.completed_at))
+            .first()
+        )
+        if jr is None:
+            return {"found": False}
+        d = _job_run_to_dict(jr)
+        d["found"] = True
+        return d
+
+
+@router.get("/runs/{run_id}")
+def get_job_run(run_id: str) -> dict[str, Any]:
+    """Full structured trace for one JobRun (run-detail expandable view).
+
+    The `details` array carries one entry per processed user with
+    `reason`, `stuck_streak_weeks`, `latest_overall`,
+    `latest_suggested_scope`, and (if fired) `nudge_id`. The frontend
+    renders this as the 4-step trace: load -> formulas -> trigger -> nudge.
+    """
+    with db_session() as db:
+        jr = db.get(JobRun, run_id)
+        if jr is None:
+            raise HTTPException(status_code=404, detail="job run not found")
+        return _job_run_to_dict(jr)
 
 
 __all__ = ["router"]

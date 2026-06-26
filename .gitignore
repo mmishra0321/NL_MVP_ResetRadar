@@ -49,6 +49,9 @@ scratch/
 backend/uvicorn.log
 backend/uvicorn.err.log
 .commit-msg.tmp
+# R8: dev-only screenshots captured during R8 verification.
+# Deck-canonical captures live in ../03-research-and-deck/assets/mvp-screenshots/.
+screenshots/
 
 # --- Build ---
 dist/
