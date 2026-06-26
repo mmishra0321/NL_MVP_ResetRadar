@@ -22,6 +22,7 @@ from pathlib import Path
 from typing import Any
 
 from fastapi import APIRouter, HTTPException, status
+from sqlalchemy import asc, desc
 
 from app.config import settings
 from app.db import db_session
@@ -34,6 +35,7 @@ from app.models import (
     User,
     WeeklySnapshot,
 )
+from app.spotify_client import SpotifyAuthError, fetch_recent_snapshot
 
 
 router = APIRouter()
@@ -135,16 +137,16 @@ def _has_active_session(db, user_id: str) -> bool:
 def run_weekly_detection(dry_run: bool = False) -> dict[str, Any]:
     """Recompute stuck scores + fire nudges for every user.
 
-    In mock mode (the R1 default), iterates the synthetic fixture's users
-    and replaces their history end-to-end. In real mode (R4+, not yet
-    implemented), this endpoint will fetch THIS week's Spotify data for
-    every authenticated user and append to existing history.
+    Mock mode: iterates the synthetic fixture's users, wipes any prior
+    demo state, replays 8 weeks of data through detection.
+
+    Real mode (R4+): iterates users with valid Spotify access tokens,
+    appends THIS week's snapshot, recomputes stuck scores across the
+    user's accumulated history, fires a nudge if the trigger rule passes
+    (respecting cooldown).
     """
     if not settings.mock_mode:
-        raise HTTPException(
-            status_code=status.HTTP_501_NOT_IMPLEMENTED,
-            detail="Real-Spotify weekly detection lands in R4.",
-        )
+        return _run_real_mode(dry_run=dry_run)
 
     fixture = _load_synthetic_weeks()
     user_ids = sorted({
@@ -248,6 +250,182 @@ def run_weekly_detection(dry_run: bool = False) -> dict[str, Any]:
         dry_run,
     )
     return summary
+
+
+# ============================================================
+# Real-mode runner (R4)
+# ============================================================
+
+def _run_real_mode(*, dry_run: bool) -> dict[str, Any]:
+    """Per-user real-Spotify weekly snapshot + detection.
+
+    For each user with a non-null `access_token`:
+      1. Determine the current ISO week.
+      2. Skip if a snapshot for that week already exists (idempotent
+         re-runs by the cron).
+      3. Fetch a fresh snapshot via spotify_client.fetch_recent_snapshot.
+      4. Persist WeeklySnapshot.
+      5. Load the user's full snapshot history.
+      6. Recompute StuckScore rows for every week (cheap; ensures the
+         normalisation against trailing history stays accurate as new
+         weeks land).
+      7. Evaluate the trigger rule; fire a Nudge if it passes AND the
+         cooldown is over AND no active reset session exists.
+    """
+    summary: dict[str, Any] = {
+        "mock_mode": False,
+        "dry_run": dry_run,
+        "users_processed": 0,
+        "snapshots_created": 0,
+        "scores_computed": 0,
+        "nudges_fired": 0,
+        "details": [],
+    }
+    now = datetime.utcnow()
+    this_week = _iso_week(now)
+
+    with db_session() as db:
+        users = db.query(User).filter(User.access_token.isnot(None)).all()
+        if not users:
+            summary["details"].append({
+                "reason": "no authenticated users; complete /auth/login first.",
+            })
+            return summary
+
+        for user in users:
+            entry: dict[str, Any] = {"user_id": user.id, "this_week": this_week}
+
+            # 2) Skip if this week is already recorded.
+            existing = (
+                db.query(WeeklySnapshot)
+                .filter(
+                    WeeklySnapshot.user_id == user.id,
+                    WeeklySnapshot.iso_week == this_week,
+                )
+                .first()
+            )
+            if existing and not dry_run:
+                entry["skipped"] = "snapshot for this week already exists"
+                # Still recompute scores below in case detection logic changed.
+            else:
+                # 3-4) Fetch + persist this week's snapshot.
+                try:
+                    snap = fetch_recent_snapshot(
+                        user_id=user.id,
+                        iso_week=this_week,
+                        user_record=user,
+                    )
+                except SpotifyAuthError as exc:
+                    entry["error"] = f"auth: {exc}"
+                    summary["details"].append(entry)
+                    continue
+                except Exception as exc:                                   # noqa: BLE001
+                    log.exception("fetch_recent_snapshot failed for %s", user.id)
+                    entry["error"] = f"fetch failed: {exc}"
+                    summary["details"].append(entry)
+                    continue
+
+                if not dry_run:
+                    db.add(WeeklySnapshot(
+                        id=str(uuid.uuid4()),
+                        user_id=user.id,
+                        iso_week=this_week,
+                        payload_json=snap,
+                        computed_at=now,
+                    ))
+                    db.flush()                                              # so step 5 sees the new row
+                    summary["snapshots_created"] += 1
+
+            # 5) Load full history (oldest -> newest).
+            rows = (
+                db.query(WeeklySnapshot)
+                .filter(WeeklySnapshot.user_id == user.id)
+                .order_by(asc(WeeklySnapshot.iso_week))
+                .all()
+            )
+            weekly_track_rows = [
+                (r.iso_week, (r.payload_json or {}).get("tracks") or [])
+                for r in rows
+            ]
+            if not weekly_track_rows:
+                entry["note"] = "no history yet; trigger evaluation skipped."
+                summary["details"].append(entry)
+                continue
+
+            # 6) Recompute stuck scores for all weeks.
+            result = process_user_weeks(
+                user_id=user.id, weekly_track_rows=weekly_track_rows,
+            )
+            scores = result["scores"]
+            if not dry_run:
+                db.query(StuckScore).filter(StuckScore.user_id == user.id).delete()
+                for s in scores:
+                    pd = s["per_dimension"]
+                    db.add(StuckScore(
+                        id=str(uuid.uuid4()),
+                        user_id=user.id,
+                        iso_week=s["iso_week"],
+                        genre=pd.genre, language=pd.language,
+                        era=pd.era, mood=pd.mood,
+                        overall=s["overall"],
+                        suggested_scope=s["suggested_scope"],
+                        computed_at=now,
+                    ))
+                summary["scores_computed"] += len(scores)
+
+            # 7) Trigger evaluation (with real cooldown lookup).
+            last_nudge = (
+                db.query(Nudge)
+                .filter(Nudge.user_id == user.id)
+                .order_by(desc(Nudge.created_at))
+                .first()
+            )
+            decision = should_trigger_nudge(
+                user_id=user.id,
+                recent_scores=scores,
+                last_nudge_at=last_nudge.created_at if last_nudge else None,
+                has_active_session=_has_active_session(db, user.id),
+            )
+            entry["trigger"] = decision["trigger"]
+            entry["reason"] = decision["reason"]
+            entry["stuck_streak_weeks"] = decision["stuck_streak_weeks"]
+            entry["latest_overall"] = scores[-1]["overall"] if scores else None
+            entry["latest_suggested_scope"] = scores[-1]["suggested_scope"] if scores else None
+
+            if decision["trigger"] and not dry_run:
+                latest = scores[-1]
+                nudge_id = str(uuid.uuid4())
+                db.add(Nudge(
+                    id=nudge_id,
+                    user_id=user.id,
+                    overall_stuck_score=latest["overall"],
+                    suggested_scope=latest["suggested_scope"],
+                    status="pending",
+                    created_at=now,
+                ))
+                summary["nudges_fired"] += 1
+                entry["nudge_id"] = nudge_id
+
+            summary["users_processed"] += 1
+            summary["details"].append(entry)
+
+        if not dry_run:
+            db.commit()
+
+    log.info(
+        "[real-mode] weekly detection complete | users=%d snapshots=%d scores=%d nudges=%d (dry=%s)",
+        summary["users_processed"],
+        summary["snapshots_created"],
+        summary["scores_computed"],
+        summary["nudges_fired"],
+        dry_run,
+    )
+    return summary
+
+
+def _iso_week(dt: datetime) -> str:
+    iso_year, iso_week, _ = dt.isocalendar()
+    return f"{iso_year}-W{iso_week:02d}"
 
 
 __all__ = ["router"]

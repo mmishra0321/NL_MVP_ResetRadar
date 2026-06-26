@@ -39,6 +39,20 @@ class Settings(BaseSettings):
         description="OAuth callback URL registered with Spotify",
     )
 
+    # === Session signing (R4 OAuth) ===
+    session_secret_key: str = Field(
+        default="reset-radar-dev-secret-CHANGE-IN-PROD",
+        description=(
+            "Used to sign the session cookie that links a browser to a user_id "
+            "after OAuth callback. CHANGE for any deploy; the dev default is "
+            "fine for local mock-mode demos."
+        ),
+    )
+    frontend_origin: str = Field(
+        default="http://127.0.0.1:5173",
+        description="Where /auth/callback redirects after a successful login.",
+    )
+
     # === LLM models ===
     groq_model_reasoner: str = Field(default="llama-3.3-70b-versatile")
     groq_model_fast: str = Field(default="llama-3.1-8b-instant")

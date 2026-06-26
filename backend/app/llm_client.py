@@ -135,8 +135,103 @@ def ping() -> str:
 
 
 # ============================================================
-# Reset Radar-specific LLM operations (stubs - real impls in R1, R2, R4)
+# Reset Radar-specific LLM operations
 # ============================================================
+
+# ---- Allowed-label vocabularies (canonical sets) -------------
+
+_ALLOWED_LANGUAGES: set[str] = {
+    # Just the codes we actually surface; the LLM will be told to fall back
+    # to "other" if it sees something outside this set.
+    "en", "es", "fr", "pt", "de", "it",
+    "hi", "ta", "te", "ml", "kn", "bn", "pa", "ur",
+    "ko", "ja", "zh",
+    "instrumental", "other",
+}
+
+_ALLOWED_MOODS: set[str] = {
+    "chill", "melancholy", "energetic", "nostalgic", "focus",
+}
+
+
+# ---- Batch language classification ---------------------------
+
+_LANG_SYSTEM_PROMPT = """\
+You are Reset Radar's language classifier. For each input track you will
+return the primary lyric language as an ISO 639-1 code.
+
+Allowed codes:
+  en (English), es (Spanish), fr (French), pt (Portuguese), de (German),
+  it (Italian), hi (Hindi), ta (Tamil), te (Telugu), ml (Malayalam),
+  kn (Kannada), bn (Bengali), pa (Punjabi), ur (Urdu), ko (Korean),
+  ja (Japanese), zh (Chinese), instrumental (no lyrics), other (anything
+  else).
+
+Use "instrumental" only when you are confident the track has no lyrics
+(classical, electronic ambient, jazz instrumentals, etc.). Use "other"
+when you genuinely cannot tell.
+
+You will receive a JSON list of tracks. Return JSON of exactly:
+{
+  "classifications": [
+    {"index": 0, "language": "<code>"},
+    {"index": 1, "language": "<code>"},
+    ...
+  ]
+}
+
+The output list must have the same length as the input list and the
+same `index` values. Do not skip or reorder.
+"""
+
+
+def classify_languages(tracks: list[dict[str, Any]]) -> list[str]:
+    """Batch-classify the primary lyric language of each track.
+
+    Args:
+        tracks: list of dicts with at least `title` and `artist` keys; may
+                also contain `genres`, `album`. Order is preserved in the
+                return value.
+
+    Returns:
+        list of language codes parallel to `tracks`. Falls back to "other"
+        on any per-track parse error.
+    """
+    if not tracks:
+        return []
+    compact = [
+        {
+            "index": i,
+            "title": t.get("title", ""),
+            "artist": t.get("artist", ""),
+            "genres": t.get("genres", [])[:3],
+            "album": t.get("album"),
+        }
+        for i, t in enumerate(tracks)
+    ]
+    payload = chat_json(
+        system=_LANG_SYSTEM_PROMPT,
+        user=json.dumps({"tracks": compact}, ensure_ascii=False),
+        model=settings.groq_model_fast,                                # 8b is plenty for label tasks
+        temperature=0.0,
+        max_tokens=1024 + 32 * len(tracks),
+    )
+
+    result = ["other"] * len(tracks)
+    items = payload.get("classifications") if isinstance(payload, dict) else None
+    if isinstance(items, list):
+        for entry in items:
+            if not isinstance(entry, dict):
+                continue
+            idx = entry.get("index")
+            lang = entry.get("language")
+            if (isinstance(idx, int) and 0 <= idx < len(tracks)
+                    and isinstance(lang, str) and lang.lower() in _ALLOWED_LANGUAGES):
+                result[idx] = lang.lower()
+    return result
+
+
+# ---- Backwards-compatible per-track shim ---------------------
 
 def classify_language(
     *,
@@ -144,20 +239,87 @@ def classify_language(
     artist_name: str,
     genres: list[str] | None = None,
 ) -> str:
-    """Return an ISO 639-1 language code for the track.
+    """Single-track convenience wrapper around `classify_languages`.
 
-    Replaces Spotify's missing language field. Reset Radar treats
-    language as a first-class diversity dimension, so this function's
-    accuracy directly affects the detection signal.
-
-    Real implementation lands in R1 (Detection · mock-first).
-    Returns "en" as a placeholder so R0 doesn't crash if a caller hits
-    this prematurely.
+    Real implementations should call the batch version directly to avoid
+    paying the Groq round-trip cost per track. Kept here for API
+    stability and ad-hoc REPL use.
     """
-    raise NotImplementedError(
-        "classify_language is implemented in R1; "
-        "do not call it in R0 scaffold tests."
+    return classify_languages([{
+        "title": track_title,
+        "artist": artist_name,
+        "genres": genres or [],
+    }])[0]
+
+
+# ---- Batch mood classification -------------------------------
+
+_MOOD_SYSTEM_PROMPT = """\
+You are Reset Radar's mood classifier. For each input track return the
+dominant mood as one of EXACTLY:
+  chill        - relaxed, low-energy, smooth
+  melancholy   - sad, wistful, introspective
+  energetic    - upbeat, danceable, propulsive
+  nostalgic    - sentimental, looks-back, comfortable
+  focus        - instrumental or minimal-vocal, suited to concentration
+
+Pick the best fit even if more than one applies. This is an approximation
+(Spotify's audio-features endpoint was removed) and is documented as such
+in the product UI.
+
+Input is a JSON list of tracks. Return JSON of exactly:
+{
+  "classifications": [
+    {"index": 0, "mood": "<label>"},
+    {"index": 1, "mood": "<label>"},
+    ...
+  ]
+}
+
+The output list must have the same length as the input list and the
+same `index` values.
+"""
+
+
+def classify_moods(tracks: list[dict[str, Any]]) -> list[str]:
+    """Batch-classify the dominant mood of each track.
+
+    Returns:
+        list of mood labels parallel to `tracks`. Falls back to "chill"
+        (the most common bucket) on any per-track parse error.
+    """
+    if not tracks:
+        return []
+    compact = [
+        {
+            "index": i,
+            "title": t.get("title", ""),
+            "artist": t.get("artist", ""),
+            "genres": t.get("genres", [])[:3],
+            "album": t.get("album"),
+        }
+        for i, t in enumerate(tracks)
+    ]
+    payload = chat_json(
+        system=_MOOD_SYSTEM_PROMPT,
+        user=json.dumps({"tracks": compact}, ensure_ascii=False),
+        model=settings.groq_model_fast,
+        temperature=0.0,
+        max_tokens=1024 + 32 * len(tracks),
     )
+
+    result = ["chill"] * len(tracks)
+    items = payload.get("classifications") if isinstance(payload, dict) else None
+    if isinstance(items, list):
+        for entry in items:
+            if not isinstance(entry, dict):
+                continue
+            idx = entry.get("index")
+            mood = entry.get("mood")
+            if (isinstance(idx, int) and 0 <= idx < len(tracks)
+                    and isinstance(mood, str) and mood.lower() in _ALLOWED_MOODS):
+                result[idx] = mood.lower()
+    return result
 
 
 def classify_mood(
@@ -167,17 +329,13 @@ def classify_mood(
     genres: list[str] | None = None,
     album: str | None = None,
 ) -> str:
-    """Return a mood label for the track.
-
-    Replaces Spotify's removed /audio-features endpoint. Treated as an
-    approximation - mood is the lowest-weight dimension in detection.
-
-    Real implementation lands in R1 (Detection · mock-first).
-    """
-    raise NotImplementedError(
-        "classify_mood is implemented in R1; "
-        "do not call it in R0 scaffold tests."
-    )
+    """Single-track convenience wrapper around `classify_moods`."""
+    return classify_moods([{
+        "title": track_title,
+        "artist": artist_name,
+        "genres": genres or [],
+        "album": album,
+    }])[0]
 
 
 _RANK_SYSTEM_PROMPT = """\
@@ -305,7 +463,9 @@ __all__ = [
     "chat_json",
     "ping",
     "classify_language",
+    "classify_languages",
     "classify_mood",
+    "classify_moods",
     "rank_and_explain",
     "GroqError",
 ]

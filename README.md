@@ -16,17 +16,17 @@
 | Phase | What it does | State |
 |---|---|---|
 | **R0** Pivot + scaffold | Move old Sonar to `legacy-sonar/`, scaffold `backend/` + `frontend/`, carry over Groq client + config + palette | ✅ |
-| **R1** Detection engine (mock-first) | Implement formulas, ship `synthetic_weeks.json` fixture, unit tests | ⏳ next |
-| **R2** Reset engine (mock candidates + Groq) | Build search queries from scope, Groq rank + explain, ship `mock_candidates.json` | ⏳ |
-| **R3** Frontend (mock-driven end-to-end) | React UI complete on top of mock backend | ⏳ |
-| **R4** Spotify OAuth + read endpoints | Wire real Spotify Web API reads behind `MOCK_MODE=false` | ⏳ |
-| **R5** Spotify write endpoints | Real playlist create / follow / save / delete | ⏳ |
+| **R1** Detection engine (mock-first) | Implement formulas, ship `synthetic_weeks.json` fixture, unit tests | ✅ |
+| **R2** Reset engine (mock candidates + Groq) | Build search queries from scope, Groq rank + explain, ship `mock_candidates.json` | ✅ |
+| **R3** Frontend (mock-driven end-to-end) | React UI complete on top of mock backend | ✅ |
+| **R4** Spotify OAuth + read endpoints | Wire real Spotify Web API reads behind `MOCK_MODE=false` | ✅ |
+| **R5** Spotify write endpoints | Real playlist create / follow / save / delete | ⏳ next |
 | **R6** GitHub Action + polish | Lock weekly cron workflow, polish UI, lock demo script | ⏳ |
 | **R7** Deploy + capture deck screenshots | Render (backend) + Vercel (frontend), capture 3 frames | ⏳ |
 
 > **R3 is the demo-presentable stopping point.** Everything from R0
 > to R3 runs against synthetic fixtures with **zero Spotify API calls**.
-> R4-R7 are upgrades from there, not prerequisites.
+> R4-R7 are fidelity upgrades from there, not prerequisites.
 
 ---
 
@@ -133,6 +133,83 @@ There is no Spotify call in the R0-R3 path. This is intentional:
 
 To switch to real Spotify (R4+), set `MOCK_MODE=false` in
 `backend/.env` and fill in the Spotify credentials.
+
+---
+
+## Real-mode setup (R4 -- only if you want to leave mock mode)
+
+R4 wires the four Spotify read endpoints (`/me/top/tracks`,
+`/me/player/recently-played`, `/me/tracks`, `/artists/{id}`) plus an
+OAuth Authorization Code + PKCE flow. To flip a local backend into real
+mode you need a Spotify Developer app and an allow-listed Premium
+account.
+
+### 1. Create a Spotify Developer app
+
+1. Visit https://developer.spotify.com/dashboard and sign in with the
+   Spotify account whose listening Reset Radar will analyse.
+2. **Create app** → name it `Reset Radar (local)` (description is
+   anything).
+3. Open the app → **Settings** → **Edit**:
+   - **Redirect URIs**: add `http://127.0.0.1:8000/auth/callback`
+   - **Which API/SDKs are you planning to use?**: tick **Web API**
+   - Save.
+4. Stay on the Settings tab and copy the **Client ID**. The Client
+   Secret is *not* required (Reset Radar uses PKCE).
+
+### 2. Allow-list yourself
+
+While the app is in Development Mode, Spotify only honours OAuth from
+explicitly allow-listed accounts:
+
+1. Open the app → **User Management**.
+2. Add the email associated with the Spotify Premium account you'll use
+   to log in. (Up to 25 users without Extended Quota approval.)
+
+### 3. Fill in `backend/.env`
+
+```dotenv
+GROQ_API_KEY=...                  # the same key R1+R2 used
+MOCK_MODE=false                   # flip OFF
+SPOTIFY_CLIENT_ID=<from step 1.4>
+SPOTIFY_REDIRECT_URI=http://127.0.0.1:8000/auth/callback
+SESSION_SECRET_KEY=<output of: python -c "import secrets;print(secrets.token_urlsafe(48))">
+FRONTEND_ORIGIN=http://127.0.0.1:5173
+```
+
+### 4. Walk the flow
+
+```powershell
+cd backend
+uvicorn app.main:app --reload --port 8000
+# In another shell:
+start http://127.0.0.1:8000/auth/login
+# Spotify consent screen -> callback -> redirected back to localhost:5173
+# Cookie `rr_session` is now set in your browser.
+curl http://127.0.0.1:8000/auth/me
+# Should show authenticated: true + your Spotify display name.
+curl -X POST http://127.0.0.1:8000/jobs/run-weekly-detection
+# Fetches your top tracks + recently played + saved library, calls
+# Groq twice (language + mood batches), appends one WeeklySnapshot
+# row, runs detection over your history.
+```
+
+> First-time real-mode run will create exactly **one** weekly snapshot,
+> so the trigger rule (3-week streak above threshold) will deliberately
+> stay quiet. That's the expected acceptance gate per
+> `doc/architecture.md` R4 ("either fires a nudge or correctly stays
+> quiet"). Build history by re-running each week, or stick with mock
+> mode for the demo.
+
+### What R4 does NOT do
+
+- It does NOT switch the frontend default to real mode. The Dashboard
+  still calls the same backend; `MOCK_MODE` is the single switch.
+- It does NOT implement the write endpoints (create playlist, save to
+  library, unfollow playlist). Those land in R5; the current Keep /
+  Revert handlers are still mock-only.
+- It does NOT replace the deck-day demo. Mock mode remains the live-URL
+  default per architecture R7.
 
 ---
 
