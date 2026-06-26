@@ -48,6 +48,7 @@ notebooks/.ipynb_checkpoints/
 scratch/
 backend/uvicorn.log
 backend/uvicorn.err.log
+.commit-msg.tmp
 
 # --- Build ---
 dist/
