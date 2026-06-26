@@ -1,0 +1,155 @@
+/* Reset Radar - global styles
+ * Mirrors the deck's visual design contract (deck/outline.md).
+ * R3 will add component-level styles; this file ships base + reset.
+ */
+
+:root {
+  /* Mirror of src/theme.js for CSS-variable consumers */
+  --spotify-green: #1DB954;
+  --spotify-green-hover: #1ed760;
+  --spotify-black: #191414;
+  --spotify-dark-grey: #232323;
+
+  --bg-deep: #0a0a0a;
+  --bg-card: #141414;
+  --surface-elevated: #1a1a1a;
+
+  --text-primary: #FFFFFF;
+  --text-secondary: #b3b3b3;
+  --text-muted: #6b7280;
+
+  --warning-amber: #fcd34d;
+  --success-light-green: #6ee7b7;
+
+  --border: #2a2a2a;
+  --border-strong: #3a3a3a;
+
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  line-height: 1.55;
+  font-weight: 400;
+  color-scheme: dark;
+  color: var(--text-primary);
+  background-color: var(--bg-deep);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg-deep);
+}
+
+a {
+  color: var(--spotify-green);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--spotify-green-hover);
+  text-decoration: underline;
+}
+
+h1, h2, h3, h4 {
+  margin: 0 0 0.5em 0;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+button {
+  font-family: inherit;
+  font-size: 0.95rem;
+  border-radius: 999px;
+  border: none;
+  padding: 0.65em 1.4em;
+  cursor: pointer;
+  transition: background-color 120ms ease, transform 80ms ease;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: var(--spotify-green);
+  color: var(--spotify-black);
+  font-weight: 700;
+}
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--spotify-green-hover);
+  transform: scale(1.02);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+}
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--surface-elevated);
+}
+
+.app-shell {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.app-brand {
+  font-size: 1.4rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.app-brand-dot {
+  color: var(--spotify-green);
+}
+
+.app-nav {
+  display: flex;
+  gap: 1.25rem;
+  font-size: 0.95rem;
+}
+.app-nav a {
+  color: var(--text-secondary);
+}
+.app-nav a.active {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.placeholder-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: left;
+}
+.placeholder-card h2 {
+  margin-top: 0;
+}
+.placeholder-card .tag {
+  display: inline-block;
+  background: var(--surface-elevated);
+  color: var(--success-light-green);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+}

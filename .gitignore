@@ -1,0 +1,59 @@
+# --- Environment + secrets ---
+.env
+.env.local
+backend/.env
+!.env.example
+!backend/.env.example
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+backend/.venv/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- SQLite databases ---
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# --- Node / Vite (frontend) ---
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/*.local
+
+# --- IDE ---
+.vscode/
+.idea/
+*.swp
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- Local scratch ---
+notebooks/.ipynb_checkpoints/
+*.log
+scratch/
+backend/uvicorn.log
+backend/uvicorn.err.log
+
+# --- Build ---
+dist/
+build/
+
+# --- Legacy Sonar (preserved but not committed at venv level) ---
+legacy-sonar/.venv/
+legacy-sonar/__pycache__/
+legacy-sonar/**/__pycache__/

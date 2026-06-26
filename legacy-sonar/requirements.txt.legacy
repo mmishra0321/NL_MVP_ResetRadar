@@ -1,0 +1,16 @@
+# --- Core ---
+python-dotenv>=1.0.1
+pydantic>=2.7.0
+tenacity>=8.2.3
+
+# --- LLM (Groq) ---
+groq>=0.11.0
+
+# --- Spotify Web API ---
+spotipy>=2.24.0
+
+# --- UI ---
+streamlit>=1.36.0
+
+# --- Utilities ---
+requests>=2.32.3

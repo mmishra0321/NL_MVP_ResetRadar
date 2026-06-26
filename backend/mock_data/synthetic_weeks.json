@@ -1,0 +1,2795 @@
+{
+  "_schema_version": 1,
+  "_generated_by": "scripts/generate_synthetic_weeks.py",
+  "_personas": {
+    "demo-karthik-001": {
+      "display_name": "Karthik (demo · multilingual)",
+      "stuck_axis": "language",
+      "trajectory_summary": "balanced en/te/hi -> 91% Telugu by W26"
+    },
+    "demo-aanya-002": {
+      "display_name": "Aanya (demo · English indie)",
+      "stuck_axis": "genre",
+      "trajectory_summary": "5-subgenre mix -> 85% dream-pop by W26"
+    }
+  },
+  "weeks": {
+    "2026-W19": [
+      {
+        "iso_week": "2026-W19",
+        "user_id": "demo-karthik-001",
+        "tracks": [
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w19-t000",
+            "title": "Tum Hi Ho",
+            "artist": "Arijit Singh",
+            "genres": [
+              "hindi-film-pop"
+            ],
+            "language": "hi",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w19-t001",
+            "title": "Pumped Up Kicks",
+            "artist": "Foster the People",
+            "genres": [
+              "indie-pop",
+              "alt-rock"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 4
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w19-t002",
+            "title": "Channa Mereya",
+            "artist": "Arijit Singh",
+            "genres": [
+              "hindi-film-pop"
+            ],
+            "language": "hi",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 6
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w19-t003",
+            "title": "Holocene",
+            "artist": "Bon Iver",
+            "genres": [
+              "indie-folk"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w19-t005",
+            "title": "Kesariya",
+            "artist": "Arijit Singh",
+            "genres": [
+              "hindi-film-pop"
+            ],
+            "language": "hi",
+            "era": "2020s",
+            "mood": "nostalgic",
+            "play_count": 4
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w19-t006",
+            "title": "Samajavaragamana",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "nostalgic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w19-t007",
+            "title": "Bhairavi raga alap",
+            "artist": "M.S. Subbulakshmi",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "1990s",
+            "mood": "focus",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w19-t011",
+            "title": "The Night We Met",
+            "artist": "Lord Huron",
+            "genres": [
+              "indie-folk",
+              "alt-rock"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w19-t014",
+            "title": "Skinny Love",
+            "artist": "Bon Iver",
+            "genres": [
+              "indie-folk"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w19-t025",
+            "title": "Aatma Raama",
+            "artist": "Sanjay Subrahmanyan",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "focus",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w19-t027",
+            "title": "Vatapi Ganapatim",
+            "artist": "M.S. Subbulakshmi",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "1990s",
+            "mood": "focus",
+            "play_count": 1
+          }
+        ]
+      },
+      {
+        "iso_week": "2026-W19",
+        "user_id": "demo-aanya-002",
+        "tracks": [
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w19-t000",
+            "title": "Mr. Brightside",
+            "artist": "The Killers",
+            "genres": [
+              "alt-rock"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w19-t001",
+            "title": "Norway",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w19-t002",
+            "title": "Vapour Trail",
+            "artist": "Ride",
+            "genres": [
+              "shoegaze"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "melancholy",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w19-t004",
+            "title": "Atmosphere",
+            "artist": "Joy Division",
+            "genres": [
+              "post-punk"
+            ],
+            "language": "en",
+            "era": "1980s",
+            "mood": "melancholy",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w19-t005",
+            "title": "Souvlaki Space Station",
+            "artist": "Slowdive",
+            "genres": [
+              "shoegaze"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w19-t006",
+            "title": "Take Me Out",
+            "artist": "Franz Ferdinand",
+            "genres": [
+              "alt-rock"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w19-t007",
+            "title": "Munich",
+            "artist": "Editors",
+            "genres": [
+              "post-punk"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w19-t008",
+            "title": "Liability",
+            "artist": "Lorde",
+            "genres": [
+              "indie-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w19-t010",
+            "title": "Solitude",
+            "artist": "Lucy Dacus",
+            "genres": [
+              "indie-pop"
+            ],
+            "language": "en",
+            "era": "2020s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w19-t011",
+            "title": "Pink Rabbits",
+            "artist": "The National",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w19-t012",
+            "title": "Green Eyes",
+            "artist": "Lucy Dacus",
+            "genres": [
+              "indie-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w19-t013",
+            "title": "Last Nite",
+            "artist": "The Strokes",
+            "genres": [
+              "alt-rock"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w19-t014",
+            "title": "Levitation",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w19-t015",
+            "title": "Fade Into You",
+            "artist": "Mazzy Star",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w19-t020",
+            "title": "Cherry-coloured Funk",
+            "artist": "Cocteau Twins",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w19-t024",
+            "title": "Belinda Says",
+            "artist": "Alvvays",
+            "genres": [
+              "indie-pop"
+            ],
+            "language": "en",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w19-t027",
+            "title": "Myth",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 1
+          }
+        ]
+      }
+    ],
+    "2026-W20": [
+      {
+        "iso_week": "2026-W20",
+        "user_id": "demo-karthik-001",
+        "tracks": [
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t000",
+            "title": "Endaro Mahanubhavulu",
+            "artist": "T.M. Krishna",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "focus",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t001",
+            "title": "Pumped Up Kicks",
+            "artist": "Foster the People",
+            "genres": [
+              "indie-pop",
+              "alt-rock"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t002",
+            "title": "Vatapi Ganapatim",
+            "artist": "M.S. Subbulakshmi",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "1990s",
+            "mood": "focus",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t003",
+            "title": "Inkem Inkem",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "nostalgic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t004",
+            "title": "Ho Hey",
+            "artist": "The Lumineers",
+            "genres": [
+              "indie-folk",
+              "folk-rock"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "energetic",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t005",
+            "title": "Aatma Raama",
+            "artist": "Sanjay Subrahmanyan",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "focus",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t006",
+            "title": "Butta Bomma",
+            "artist": "Armaan Malik",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t008",
+            "title": "Tum Hi Ho",
+            "artist": "Arijit Singh",
+            "genres": [
+              "hindi-film-pop"
+            ],
+            "language": "hi",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t009",
+            "title": "The Night We Met",
+            "artist": "Lord Huron",
+            "genres": [
+              "indie-folk",
+              "alt-rock"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t011",
+            "title": "Manasanamaha",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t013",
+            "title": "Oo Antava",
+            "artist": "Indravathi Chauhan",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t016",
+            "title": "Saami Saami",
+            "artist": "Mounika Yadav",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t017",
+            "title": "Bhairavi raga alap",
+            "artist": "M.S. Subbulakshmi",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "1990s",
+            "mood": "focus",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t018",
+            "title": "Float On",
+            "artist": "Modest Mouse",
+            "genres": [
+              "indie-rock",
+              "alt-rock"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t020",
+            "title": "Kesariya",
+            "artist": "Arijit Singh",
+            "genres": [
+              "hindi-film-pop"
+            ],
+            "language": "hi",
+            "era": "2020s",
+            "mood": "nostalgic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t022",
+            "title": "Sahana",
+            "artist": "Karthik Sivasankar",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "focus",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t024",
+            "title": "Mr. Brightside",
+            "artist": "The Killers",
+            "genres": [
+              "alt-rock",
+              "indie-rock"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t025",
+            "title": "Re: Stacks",
+            "artist": "Bon Iver",
+            "genres": [
+              "indie-folk"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w20-t027",
+            "title": "Holocene",
+            "artist": "Bon Iver",
+            "genres": [
+              "indie-folk"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          }
+        ]
+      },
+      {
+        "iso_week": "2026-W20",
+        "user_id": "demo-aanya-002",
+        "tracks": [
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w20-t000",
+            "title": "Heaven Or Las Vegas",
+            "artist": "Cocteau Twins",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w20-t001",
+            "title": "Star Roving",
+            "artist": "Slowdive",
+            "genres": [
+              "shoegaze"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "energetic",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w20-t002",
+            "title": "Obstacle 1",
+            "artist": "Interpol",
+            "genres": [
+              "post-punk"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w20-t004",
+            "title": "Sometimes Always",
+            "artist": "The Jesus and Mary Chain",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w20-t005",
+            "title": "Sometimes",
+            "artist": "My Bloody Valentine",
+            "genres": [
+              "shoegaze"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "melancholy",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w20-t006",
+            "title": "Levitation",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w20-t007",
+            "title": "Pink Rabbits",
+            "artist": "The National",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w20-t008",
+            "title": "Norway",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w20-t009",
+            "title": "Solitude",
+            "artist": "Lucy Dacus",
+            "genres": [
+              "indie-pop"
+            ],
+            "language": "en",
+            "era": "2020s",
+            "mood": "melancholy",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w20-t010",
+            "title": "Take Me Out",
+            "artist": "Franz Ferdinand",
+            "genres": [
+              "alt-rock"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w20-t016",
+            "title": "Maps",
+            "artist": "Yeah Yeah Yeahs",
+            "genres": [
+              "alt-rock"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "melancholy",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w20-t017",
+            "title": "Belinda Says",
+            "artist": "Alvvays",
+            "genres": [
+              "indie-pop"
+            ],
+            "language": "en",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w20-t018",
+            "title": "Space Song",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w20-t019",
+            "title": "Myth",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w20-t024",
+            "title": "Cherry-coloured Funk",
+            "artist": "Cocteau Twins",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w20-t025",
+            "title": "Green Eyes",
+            "artist": "Lucy Dacus",
+            "genres": [
+              "indie-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w20-t027",
+            "title": "Evil",
+            "artist": "Interpol",
+            "genres": [
+              "post-punk"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 1
+          }
+        ]
+      }
+    ],
+    "2026-W21": [
+      {
+        "iso_week": "2026-W21",
+        "user_id": "demo-karthik-001",
+        "tracks": [
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w21-t000",
+            "title": "Holocene",
+            "artist": "Bon Iver",
+            "genres": [
+              "indie-folk"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w21-t001",
+            "title": "Float On",
+            "artist": "Modest Mouse",
+            "genres": [
+              "indie-rock",
+              "alt-rock"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w21-t002",
+            "title": "Vachindamma",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w21-t003",
+            "title": "Tum Hi Ho",
+            "artist": "Arijit Singh",
+            "genres": [
+              "hindi-film-pop"
+            ],
+            "language": "hi",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w21-t004",
+            "title": "Kesariya",
+            "artist": "Arijit Singh",
+            "genres": [
+              "hindi-film-pop"
+            ],
+            "language": "hi",
+            "era": "2020s",
+            "mood": "nostalgic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w21-t005",
+            "title": "Channa Mereya",
+            "artist": "Arijit Singh",
+            "genres": [
+              "hindi-film-pop"
+            ],
+            "language": "hi",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w21-t006",
+            "title": "Bhairavi raga alap",
+            "artist": "M.S. Subbulakshmi",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "1990s",
+            "mood": "focus",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w21-t007",
+            "title": "Re: Stacks",
+            "artist": "Bon Iver",
+            "genres": [
+              "indie-folk"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "melancholy",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w21-t009",
+            "title": "Ho Hey",
+            "artist": "The Lumineers",
+            "genres": [
+              "indie-folk",
+              "folk-rock"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "energetic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w21-t011",
+            "title": "Sahana",
+            "artist": "Karthik Sivasankar",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "focus",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w21-t012",
+            "title": "Oo Antava",
+            "artist": "Indravathi Chauhan",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w21-t014",
+            "title": "Samajavaragamana",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "nostalgic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w21-t015",
+            "title": "Endaro Mahanubhavulu",
+            "artist": "T.M. Krishna",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "focus",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w21-t016",
+            "title": "Saami Saami",
+            "artist": "Mounika Yadav",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w21-t018",
+            "title": "Aatma Raama",
+            "artist": "Sanjay Subrahmanyan",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "focus",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w21-t020",
+            "title": "Butta Bomma",
+            "artist": "Armaan Malik",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w21-t024",
+            "title": "Inkem Inkem",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "nostalgic",
+            "play_count": 2
+          }
+        ]
+      },
+      {
+        "iso_week": "2026-W21",
+        "user_id": "demo-aanya-002",
+        "tracks": [
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t000",
+            "title": "Space Song",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t001",
+            "title": "Mr. Brightside",
+            "artist": "The Killers",
+            "genres": [
+              "alt-rock"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t002",
+            "title": "Atmosphere",
+            "artist": "Joy Division",
+            "genres": [
+              "post-punk"
+            ],
+            "language": "en",
+            "era": "1980s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t003",
+            "title": "Liability",
+            "artist": "Lorde",
+            "genres": [
+              "indie-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t004",
+            "title": "Munich",
+            "artist": "Editors",
+            "genres": [
+              "post-punk"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t005",
+            "title": "Myth",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t006",
+            "title": "Reptilia",
+            "artist": "The Strokes",
+            "genres": [
+              "alt-rock"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t007",
+            "title": "Souvlaki Space Station",
+            "artist": "Slowdive",
+            "genres": [
+              "shoegaze"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t008",
+            "title": "Levitation",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t009",
+            "title": "Last Nite",
+            "artist": "The Strokes",
+            "genres": [
+              "alt-rock"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t010",
+            "title": "Star Roving",
+            "artist": "Slowdive",
+            "genres": [
+              "shoegaze"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t011",
+            "title": "Archie, Marry Me",
+            "artist": "Alvvays",
+            "genres": [
+              "indie-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "energetic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t012",
+            "title": "Norway",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t014",
+            "title": "Cherry-coloured Funk",
+            "artist": "Cocteau Twins",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t019",
+            "title": "Solitude",
+            "artist": "Lucy Dacus",
+            "genres": [
+              "indie-pop"
+            ],
+            "language": "en",
+            "era": "2020s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t020",
+            "title": "Belinda Says",
+            "artist": "Alvvays",
+            "genres": [
+              "indie-pop"
+            ],
+            "language": "en",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t022",
+            "title": "Obstacle 1",
+            "artist": "Interpol",
+            "genres": [
+              "post-punk"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t025",
+            "title": "Sometimes Always",
+            "artist": "The Jesus and Mary Chain",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w21-t026",
+            "title": "Only Shallow",
+            "artist": "My Bloody Valentine",
+            "genres": [
+              "shoegaze"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "energetic",
+            "play_count": 1
+          }
+        ]
+      }
+    ],
+    "2026-W22": [
+      {
+        "iso_week": "2026-W22",
+        "user_id": "demo-karthik-001",
+        "tracks": [
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w22-t000",
+            "title": "Butta Bomma",
+            "artist": "Armaan Malik",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w22-t001",
+            "title": "Vatapi Ganapatim",
+            "artist": "M.S. Subbulakshmi",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "1990s",
+            "mood": "focus",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w22-t002",
+            "title": "Float On",
+            "artist": "Modest Mouse",
+            "genres": [
+              "indie-rock",
+              "alt-rock"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w22-t004",
+            "title": "Sahana",
+            "artist": "Karthik Sivasankar",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "focus",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w22-t005",
+            "title": "Kesariya",
+            "artist": "Arijit Singh",
+            "genres": [
+              "hindi-film-pop"
+            ],
+            "language": "hi",
+            "era": "2020s",
+            "mood": "nostalgic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w22-t006",
+            "title": "Samajavaragamana",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "nostalgic",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w22-t007",
+            "title": "Channa Mereya",
+            "artist": "Arijit Singh",
+            "genres": [
+              "hindi-film-pop"
+            ],
+            "language": "hi",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w22-t008",
+            "title": "Re: Stacks",
+            "artist": "Bon Iver",
+            "genres": [
+              "indie-folk"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "melancholy",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w22-t009",
+            "title": "Saami Saami",
+            "artist": "Mounika Yadav",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w22-t010",
+            "title": "Holocene",
+            "artist": "Bon Iver",
+            "genres": [
+              "indie-folk"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w22-t011",
+            "title": "Oo Antava",
+            "artist": "Indravathi Chauhan",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 4
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w22-t015",
+            "title": "Aatma Raama",
+            "artist": "Sanjay Subrahmanyan",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "focus",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w22-t017",
+            "title": "Skinny Love",
+            "artist": "Bon Iver",
+            "genres": [
+              "indie-folk"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w22-t020",
+            "title": "Manasanamaha",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w22-t024",
+            "title": "Inkem Inkem",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "nostalgic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w22-t026",
+            "title": "Ho Hey",
+            "artist": "The Lumineers",
+            "genres": [
+              "indie-folk",
+              "folk-rock"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "energetic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w22-t027",
+            "title": "Endaro Mahanubhavulu",
+            "artist": "T.M. Krishna",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "focus",
+            "play_count": 1
+          }
+        ]
+      },
+      {
+        "iso_week": "2026-W22",
+        "user_id": "demo-aanya-002",
+        "tracks": [
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w22-t000",
+            "title": "Heaven Or Las Vegas",
+            "artist": "Cocteau Twins",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 4
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w22-t001",
+            "title": "Vapour Trail",
+            "artist": "Ride",
+            "genres": [
+              "shoegaze"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "melancholy",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w22-t002",
+            "title": "Only Shallow",
+            "artist": "My Bloody Valentine",
+            "genres": [
+              "shoegaze"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "energetic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w22-t003",
+            "title": "Pink Rabbits",
+            "artist": "The National",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 4
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w22-t004",
+            "title": "Sometimes",
+            "artist": "My Bloody Valentine",
+            "genres": [
+              "shoegaze"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w22-t005",
+            "title": "Fade Into You",
+            "artist": "Mazzy Star",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "melancholy",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w22-t009",
+            "title": "Cherry-coloured Funk",
+            "artist": "Cocteau Twins",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w22-t010",
+            "title": "Atmosphere",
+            "artist": "Joy Division",
+            "genres": [
+              "post-punk"
+            ],
+            "language": "en",
+            "era": "1980s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w22-t011",
+            "title": "Sometimes Always",
+            "artist": "The Jesus and Mary Chain",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w22-t013",
+            "title": "Archie, Marry Me",
+            "artist": "Alvvays",
+            "genres": [
+              "indie-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w22-t015",
+            "title": "Levitation",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w22-t016",
+            "title": "Souvlaki Space Station",
+            "artist": "Slowdive",
+            "genres": [
+              "shoegaze"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w22-t017",
+            "title": "Myth",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w22-t021",
+            "title": "Norway",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w22-t022",
+            "title": "Space Song",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w22-t025",
+            "title": "Mr. Brightside",
+            "artist": "The Killers",
+            "genres": [
+              "alt-rock"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 1
+          }
+        ]
+      }
+    ],
+    "2026-W23": [
+      {
+        "iso_week": "2026-W23",
+        "user_id": "demo-karthik-001",
+        "tracks": [
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w23-t000",
+            "title": "Mr. Brightside",
+            "artist": "The Killers",
+            "genres": [
+              "alt-rock",
+              "indie-rock"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w23-t001",
+            "title": "Oo Antava",
+            "artist": "Indravathi Chauhan",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w23-t002",
+            "title": "Vatapi Ganapatim",
+            "artist": "M.S. Subbulakshmi",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "1990s",
+            "mood": "focus",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w23-t003",
+            "title": "Aatma Raama",
+            "artist": "Sanjay Subrahmanyan",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "focus",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w23-t004",
+            "title": "Channa Mereya",
+            "artist": "Arijit Singh",
+            "genres": [
+              "hindi-film-pop"
+            ],
+            "language": "hi",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w23-t005",
+            "title": "Bhairavi raga alap",
+            "artist": "M.S. Subbulakshmi",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "1990s",
+            "mood": "focus",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w23-t006",
+            "title": "Sahana",
+            "artist": "Karthik Sivasankar",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "focus",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w23-t007",
+            "title": "Vachindamma",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w23-t008",
+            "title": "Butta Bomma",
+            "artist": "Armaan Malik",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 5
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w23-t009",
+            "title": "Samajavaragamana",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "nostalgic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w23-t011",
+            "title": "Endaro Mahanubhavulu",
+            "artist": "T.M. Krishna",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "focus",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w23-t012",
+            "title": "Inkem Inkem",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "nostalgic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w23-t015",
+            "title": "Saami Saami",
+            "artist": "Mounika Yadav",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 1
+          }
+        ]
+      },
+      {
+        "iso_week": "2026-W23",
+        "user_id": "demo-aanya-002",
+        "tracks": [
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w23-t000",
+            "title": "Fade Into You",
+            "artist": "Mazzy Star",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "melancholy",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w23-t001",
+            "title": "Heaven Or Las Vegas",
+            "artist": "Cocteau Twins",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 5
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w23-t002",
+            "title": "Star Roving",
+            "artist": "Slowdive",
+            "genres": [
+              "shoegaze"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "energetic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w23-t003",
+            "title": "Space Song",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 4
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w23-t004",
+            "title": "Myth",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 5
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w23-t006",
+            "title": "Sometimes Always",
+            "artist": "The Jesus and Mary Chain",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w23-t011",
+            "title": "Levitation",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 5
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w23-t012",
+            "title": "Souvlaki Space Station",
+            "artist": "Slowdive",
+            "genres": [
+              "shoegaze"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w23-t022",
+            "title": "Liability",
+            "artist": "Lorde",
+            "genres": [
+              "indie-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w23-t026",
+            "title": "Pink Rabbits",
+            "artist": "The National",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          }
+        ]
+      }
+    ],
+    "2026-W24": [
+      {
+        "iso_week": "2026-W24",
+        "user_id": "demo-karthik-001",
+        "tracks": [
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w24-t000",
+            "title": "Manasanamaha",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w24-t001",
+            "title": "Vachindamma",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w24-t003",
+            "title": "Endaro Mahanubhavulu",
+            "artist": "T.M. Krishna",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "focus",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w24-t004",
+            "title": "Bhairavi raga alap",
+            "artist": "M.S. Subbulakshmi",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "1990s",
+            "mood": "focus",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w24-t005",
+            "title": "Butta Bomma",
+            "artist": "Armaan Malik",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w24-t006",
+            "title": "Vatapi Ganapatim",
+            "artist": "M.S. Subbulakshmi",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "1990s",
+            "mood": "focus",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w24-t007",
+            "title": "Oo Antava",
+            "artist": "Indravathi Chauhan",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w24-t008",
+            "title": "Saami Saami",
+            "artist": "Mounika Yadav",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 4
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w24-t010",
+            "title": "Channa Mereya",
+            "artist": "Arijit Singh",
+            "genres": [
+              "hindi-film-pop"
+            ],
+            "language": "hi",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w24-t011",
+            "title": "Aatma Raama",
+            "artist": "Sanjay Subrahmanyan",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "focus",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w24-t012",
+            "title": "Samajavaragamana",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "nostalgic",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w24-t014",
+            "title": "Inkem Inkem",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "nostalgic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w24-t024",
+            "title": "Float On",
+            "artist": "Modest Mouse",
+            "genres": [
+              "indie-rock",
+              "alt-rock"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "energetic",
+            "play_count": 1
+          }
+        ]
+      },
+      {
+        "iso_week": "2026-W24",
+        "user_id": "demo-aanya-002",
+        "tracks": [
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w24-t000",
+            "title": "Sometimes Always",
+            "artist": "The Jesus and Mary Chain",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w24-t001",
+            "title": "Heaven Or Las Vegas",
+            "artist": "Cocteau Twins",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 8
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w24-t002",
+            "title": "Levitation",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 4
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w24-t003",
+            "title": "Archie, Marry Me",
+            "artist": "Alvvays",
+            "genres": [
+              "indie-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "energetic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w24-t004",
+            "title": "Norway",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w24-t008",
+            "title": "Pink Rabbits",
+            "artist": "The National",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 6
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w24-t016",
+            "title": "Fade Into You",
+            "artist": "Mazzy Star",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w24-t019",
+            "title": "Cherry-coloured Funk",
+            "artist": "Cocteau Twins",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w24-t024",
+            "title": "Myth",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 1
+          }
+        ]
+      }
+    ],
+    "2026-W25": [
+      {
+        "iso_week": "2026-W25",
+        "user_id": "demo-karthik-001",
+        "tracks": [
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w25-t000",
+            "title": "Sahana",
+            "artist": "Karthik Sivasankar",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "focus",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w25-t001",
+            "title": "Aatma Raama",
+            "artist": "Sanjay Subrahmanyan",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "focus",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w25-t002",
+            "title": "Vatapi Ganapatim",
+            "artist": "M.S. Subbulakshmi",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "1990s",
+            "mood": "focus",
+            "play_count": 4
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w25-t003",
+            "title": "Samajavaragamana",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "nostalgic",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w25-t006",
+            "title": "Saami Saami",
+            "artist": "Mounika Yadav",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w25-t008",
+            "title": "Oo Antava",
+            "artist": "Indravathi Chauhan",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w25-t009",
+            "title": "Butta Bomma",
+            "artist": "Armaan Malik",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w25-t010",
+            "title": "Bhairavi raga alap",
+            "artist": "M.S. Subbulakshmi",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "1990s",
+            "mood": "focus",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w25-t012",
+            "title": "Manasanamaha",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w25-t013",
+            "title": "Inkem Inkem",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "nostalgic",
+            "play_count": 4
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w25-t014",
+            "title": "Endaro Mahanubhavulu",
+            "artist": "T.M. Krishna",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "focus",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w25-t018",
+            "title": "The Night We Met",
+            "artist": "Lord Huron",
+            "genres": [
+              "indie-folk",
+              "alt-rock"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w25-t021",
+            "title": "Skinny Love",
+            "artist": "Bon Iver",
+            "genres": [
+              "indie-folk"
+            ],
+            "language": "en",
+            "era": "2000s",
+            "mood": "melancholy",
+            "play_count": 1
+          }
+        ]
+      },
+      {
+        "iso_week": "2026-W25",
+        "user_id": "demo-aanya-002",
+        "tracks": [
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w25-t000",
+            "title": "Levitation",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w25-t001",
+            "title": "Space Song",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 7
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w25-t004",
+            "title": "Myth",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 4
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w25-t006",
+            "title": "Cherry-coloured Funk",
+            "artist": "Cocteau Twins",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w25-t007",
+            "title": "Fade Into You",
+            "artist": "Mazzy Star",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "melancholy",
+            "play_count": 4
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w25-t008",
+            "title": "Norway",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w25-t010",
+            "title": "Heaven Or Las Vegas",
+            "artist": "Cocteau Twins",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 4
+          }
+        ]
+      }
+    ],
+    "2026-W26": [
+      {
+        "iso_week": "2026-W26",
+        "user_id": "demo-karthik-001",
+        "tracks": [
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w26-t000",
+            "title": "Aatma Raama",
+            "artist": "Sanjay Subrahmanyan",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "focus",
+            "play_count": 6
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w26-t001",
+            "title": "Vachindamma",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 4
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w26-t002",
+            "title": "Butta Bomma",
+            "artist": "Armaan Malik",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w26-t003",
+            "title": "Samajavaragamana",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "nostalgic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w26-t006",
+            "title": "Oo Antava",
+            "artist": "Indravathi Chauhan",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w26-t007",
+            "title": "Vatapi Ganapatim",
+            "artist": "M.S. Subbulakshmi",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "1990s",
+            "mood": "focus",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w26-t009",
+            "title": "Endaro Mahanubhavulu",
+            "artist": "T.M. Krishna",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "focus",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w26-t011",
+            "title": "Saami Saami",
+            "artist": "Mounika Yadav",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2020s",
+            "mood": "energetic",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w26-t014",
+            "title": "Bhairavi raga alap",
+            "artist": "M.S. Subbulakshmi",
+            "genres": [
+              "carnatic",
+              "classical-indian"
+            ],
+            "language": "te",
+            "era": "1990s",
+            "mood": "focus",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w26-t016",
+            "title": "Ho Hey",
+            "artist": "The Lumineers",
+            "genres": [
+              "indie-folk",
+              "folk-rock"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "energetic",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-karthik-001-w26-t020",
+            "title": "Manasanamaha",
+            "artist": "Sid Sriram",
+            "genres": [
+              "telugu-film-pop"
+            ],
+            "language": "te",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 1
+          }
+        ]
+      },
+      {
+        "iso_week": "2026-W26",
+        "user_id": "demo-aanya-002",
+        "tracks": [
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w26-t000",
+            "title": "Pink Rabbits",
+            "artist": "The National",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "melancholy",
+            "play_count": 5
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w26-t001",
+            "title": "Myth",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 6
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w26-t003",
+            "title": "Sometimes Always",
+            "artist": "The Jesus and Mary Chain",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 5
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w26-t004",
+            "title": "Fade Into You",
+            "artist": "Mazzy Star",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "melancholy",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w26-t005",
+            "title": "Levitation",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 4
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w26-t006",
+            "title": "Cherry-coloured Funk",
+            "artist": "Cocteau Twins",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 3
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w26-t009",
+            "title": "Norway",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 2
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w26-t018",
+            "title": "Space Song",
+            "artist": "Beach House",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "2010s",
+            "mood": "chill",
+            "play_count": 1
+          },
+          {
+            "spotify_track_id": "mock-demo-aanya-002-w26-t023",
+            "title": "Heaven Or Las Vegas",
+            "artist": "Cocteau Twins",
+            "genres": [
+              "dream-pop"
+            ],
+            "language": "en",
+            "era": "1990s",
+            "mood": "chill",
+            "play_count": 1
+          }
+        ]
+      }
+    ]
+  }
+}
