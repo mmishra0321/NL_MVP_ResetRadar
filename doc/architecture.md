@@ -506,7 +506,7 @@ flowchart LR
     R3 --> R4["R4 · Spotify OAuth +<br/>read endpoints<br/>0.5d ⏳"]
     R4 --> R5["R5 · Spotify writes<br/>create playlist · save · follow<br/>0.25d ⏳"]
     R5 --> R6["R6 · GH Action +<br/>polish<br/>0.25d ⏳"]
-    R6 --> R7["R7 · Deploy +<br/>capture screenshots<br/>0.25d ⏳"]
+    R6 --> R7["R7 · Capture screenshots ✅<br/>(cloud deploy deferred)<br/>0.25d"]
 
     style R0 fill:#1DB954,stroke:#fff,color:#191414
     style R1 fill:#1DB954,stroke:#fff,color:#191414
@@ -516,6 +516,12 @@ flowchart LR
 **Critical-path note:** R1 → R2 → R3 (the entirely-mock vertical slice)
 delivers a presentable, narratively complete demo on its own. R4-R7 only
 upgrade fidelity. **If time runs out, R1-R3 is the demo.**
+
+**R7-local status (2026-06-26):** the screenshot half of R7 shipped
+against localhost (3 frames in `assets/mvp-screenshots/`). The cloud
+deploy half is explicitly deferred; deck slide 7 ships a local-demo
+callout instead of a clickable URL, pointing readers at
+`doc/DEMO_SCRIPT.md`.
 
 ---
 
@@ -642,16 +648,17 @@ flowchart TB
 
 ---
 
-### R7 - Deploy + capture deck screenshots
+### R7 - Capture deck screenshots (cloud deploy deferred)
 
 | Field | Value |
 |---|---|
-| **Objective** | Deploy backend (Render / Railway / Fly) and frontend (Vercel / Netlify); verify live URL; capture 3 screenshots for the deck |
-| **Duration** | ~0.25 day · ⏳ Pending |
-| **Inputs** | Local repo green; deployment account; Groq + Spotify keys |
-| **Outputs** | Live public URL of the MVP; 3 PNG screenshots at 1920×1080 for deck slides 5/7/8 |
-| **Steps** | (1) Push to a new GitHub repo (e.g. `NL_SpotifyResetRadar`). (2) Backend → Render (Dockerfile or render.yaml). (3) Frontend → Vercel pointing at `frontend/`. (4) Set secrets in both. (5) Smoke-check live URL in incognito. (6) Capture three frames: **Frame A** = Dashboard with chart + active nudge card; **Frame B** = Reset playlist screen with explanations visible; **Frame C** = Keep-or-Revert screen with before/after scores. (7) Save to `../03-research-and-deck/assets/mvp-screenshots/`. |
-| **Acceptance** | Live URL works for the demo user (mock mode default); 3 screenshots saved; URLs added to deck slides 7 + 8 |
+| **Objective** | ~~Deploy backend + frontend; verify live URL;~~ capture 3 screenshots for the deck |
+| **Duration** | ~0.25 day · ✅ Done (R7-local: 2026-06-26) |
+| **Inputs** | Local repo green; backend + frontend running on `:8000` and `:5173`; `MOCK_MODE=true` |
+| **Outputs** | 3 PNG screenshots at 1920×1080 in `03-research-and-deck/assets/mvp-screenshots/`: `frame-a-dashboard.png`, `frame-b-reset-playlist.png`, `frame-c-keep-outcome.png`; deck slide 5 placeholders replaced with real frame paths; outline.md updated |
+| **Steps (executed)** | (1) Reset demo state via `POST /jobs/run-detection` (wipes prior `ResetSession` + fires fresh Karthik nudge). (2) Set demo user to Karthik via `localStorage.reset_radar.demo_user_id`. (3) **Frame A** = Dashboard at 1920×1080, captured before any reset click - mode badge + nudge card + chart + per-dim grid + honest footer all in frame. (4) Click *Try a language reset*, fill steering text, click *Generate reset playlist*. Wait for Groq ranking (~15s). (5) **Frame B** = Reset playlist screen with 19 LLM-ranked + LLM-explained tracks. (6) Click *Skip to outcome*, click *Keep*. (7) **Frame C** = Outcome card with BEFORE 0.86 → AFTER 0.51 → DROP 0.34 + honest projection caveat. (8) Save with deterministic filenames (no timestamps); write `assets/mvp-screenshots/README.md` as the manifest linking each frame to its consumer slide. |
+| **Acceptance (R7-local)** | 3 PNGs at 1920×1080 saved; slide 5 wired to real paths; manifest README written; full mock-mode flow walked end-to-end against localhost on the same Vite/uvicorn processes the demo uses. |
+| **Cloud deploy** | ⏸ **Explicitly deferred.** Reason: the demo runs locally and the deck ships with the local-demo callout pointing at `doc/DEMO_SCRIPT.md`. The architecture's own escape clause (§11) allows R7 to slip; here we ship R7's screenshot deliverable but defer the deploy half. To resume: pick Render / Railway / Fly for backend + Vercel / Netlify for frontend, push to `NL_SpotifyResetRadar`, set Groq + Spotify secrets, smoke-check in incognito, then **re-shoot all 3 frames against the deployed URL** so the captures match production. |
 
 ---
 

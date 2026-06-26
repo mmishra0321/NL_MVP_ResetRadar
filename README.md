@@ -22,7 +22,7 @@
 | **R4** Spotify OAuth + read endpoints | Wire real Spotify Web API reads behind `MOCK_MODE=false` | ✅ |
 | **R5** Spotify write endpoints | Real playlist create / follow / save / delete | ✅ |
 | **R6** GitHub Action + polish | Lock weekly cron workflow, polish UI, lock demo script | ✅ |
-| **R7** Deploy + capture deck screenshots | Render (backend) + Vercel (frontend), capture 3 frames | ⏳ next |
+| **R7-local** Capture deck screenshots | 3 frames at 1920×1080 in `assets/mvp-screenshots/`; cloud deploy deferred | ✅ |
 
 > **R3 is the demo-presentable stopping point.** Everything from R0
 > to R3 runs against synthetic fixtures with **zero Spotify API calls**.
@@ -63,7 +63,7 @@
 │   └── vite.config.js
 ├── .github/
 │   └── workflows/
-│       └── weekly-detection.yml   # Monday 06:00 UTC cron
+│       └── weekly-detection.yml   # Monday 09:00 UTC cron (architecture §10)
 ├── doc/
 │   ├── problemStatement.md         # MVP-scoped problem definition
 │   └── architecture.md             # Full MVP spec (the source of truth)
@@ -299,12 +299,121 @@ check.
 
 ### What R6 does NOT do (yet)
 
-- It does NOT deploy anything. R7 lands Render (backend) + Vercel
-  (frontend) and captures the deck screenshots.
+- It does NOT deploy anything. R7-local captures the deck screenshots
+  against `localhost` and intentionally defers the cloud deploy.
 - It does NOT implement a real measured `after_stuck_score`. That
   arrives naturally on the next weekly cron run after a Keep decision
   in real mode; the frontend already labels the current value as a
   projection.
+
+---
+
+## R7-local -- 3 deck frames (cloud deploy deferred)
+
+R7's original spec bundled "deploy + capture 3 screenshots". This
+round we shipped only the captures against `localhost` and explicitly
+deferred the cloud deploy. The reasoning + the resume-path is in
+[`doc/architecture.md`](doc/architecture.md) §R7. The actual frames +
+their manifest live in
+[`../03-research-and-deck/assets/mvp-screenshots/`](../03-research-and-deck/assets/mvp-screenshots/).
+
+The three frames (1920×1080, captured via Playwright against the
+running `:8000` + `:5173` servers in mock mode):
+
+| File | Captures |
+|---|---|
+| `frame-a-dashboard.png` | Dashboard with mock-mode badge, Karthik nudge ("language mix has repeated 86%"), 8-week stuck-score chart + threshold, per-dimension grid, honest mode footer |
+| `frame-b-reset-playlist.png` | 19 LLM-ranked tracks across Spanish / French / Portuguese / Korean for a Telugu/Hindi-stuck user, each with a per-language "why" line |
+| `frame-c-keep-outcome.png` | Keep outcome: BEFORE 0.86 → AFTER (projected) 0.51 → DROP 0.34 + the honest *"real value gets measured next time detection runs against real Spotify data"* caveat |
+
+To regenerate them at any time:
+
+```powershell
+# Start both servers in two terminals (uvicorn :8000 + npm run dev :5173)
+# Then in a third:
+curl.exe -X POST http://127.0.0.1:8000/jobs/run-detection -H "Content-Type: application/json" -d "{}"
+# Walk the flow in DEMO_SCRIPT.md (~90 seconds), screenshot at each step.
+```
+
+---
+
+## Enabling the weekly GitHub Action
+
+The workflow file [`.github/workflows/weekly-detection.yml`](.github/workflows/weekly-detection.yml)
+is **already committed**. GitHub Actions auto-discovers it the moment
+the file lands on the default branch — and on the repo you pushed to
+(`mmishra0321/NL_MVP_ResetRadar`) it should already show under the
+*Actions* tab.
+
+There are two distinct things to set up:
+
+### 1. Make the schedule runnable (one-time)
+
+By default GitHub Actions on a brand-new public repo are enabled, but
+on freshly forked or freshly created repos some accounts default
+scheduled workflows to "disabled until first manual run". To force-
+enable:
+
+1. Open the repo on GitHub.
+2. Click the **Actions** tab.
+3. If you see a yellow banner *"Workflows aren't being run on this
+   repository"*, click **I understand my workflows, go ahead and
+   enable them**.
+4. In the left sidebar, click **Reset Radar weekly detection**.
+5. Click **Enable workflow** (green button, top-right of the workflow
+   page). The Monday 09:00 UTC cron starts ticking from then on.
+
+That's it for the schedule. You can also fire it manually right away:
+on the same workflow page, click **Run workflow** (top-right
+dropdown), tick *dry_run* if you just want to confirm the wiring, and
+click **Run workflow** in the dropdown.
+
+### 2. Tell the action where your backend lives (only matters once you deploy)
+
+Until the backend is on a public URL, the workflow can run but it has
+nothing to call. Once you deploy (Render / Railway / Fly), set
+**two repo secrets** under *Settings → Secrets and variables →
+Actions → New repository secret*:
+
+| Secret name | Value | Notes |
+|---|---|---|
+| `RESET_RADAR_API_URL` | e.g. `https://reset-radar.onrender.com` | Your deployed backend's public URL. No trailing slash. |
+| `RESET_RADAR_API_TOKEN` | (any random string ≥ 32 chars) | Optional. Only required if you set `JOBS_API_TOKEN` to the **same** value on the backend's environment. Leave the secret empty if your backend leaves `JOBS_API_TOKEN` empty (the default, which is fine for a single-tenant demo). |
+
+The workflow already checks `RESET_RADAR_API_URL` is set before it
+calls anything — if you leave the secret empty, the workflow logs a
+clear *"set RESET_RADAR_API_URL once the MVP is deployed"* message
+and skips the curl step instead of failing.
+
+### 3. What runs each Monday
+
+Per [architecture §10](doc/architecture.md):
+
+```
+0 9 * * 1   # Mondays 09:00 UTC  →  curl -X POST $RESET_RADAR_API_URL/jobs/run-detection
+                                       -H "Content-Type: application/json"
+                                       -H "Authorization: Bearer $RESET_RADAR_API_TOKEN"
+                                       -d "{}"
+```
+
+For each user with an OAuth token, the backend:
+1. Fetches this week's listening snapshot from Spotify
+2. Appends it to history and recomputes stuck scores
+3. Evaluates trigger rules and fires nudges if the streak / threshold
+   condition is met
+
+The response JSON is uploaded as a 30-day artefact on the Actions run
+and rendered as a Markdown summary in the Actions UI (`users_processed`,
+`nudges_fired`, etc.) — so the cron is visibly working even on a
+quiet Monday.
+
+### 4. How to verify enable worked (15 seconds)
+
+After step 1 above, on the Actions page click **Run workflow** with
+`dry_run: true`. Within ~60 seconds the run should appear, go green,
+and the *Summarise the run* step should print `mock_mode: true,
+users_processed: 2, nudges_fired: 2` (matching what `curl
+/jobs/run-detection` returns locally).
 
 ---
 
